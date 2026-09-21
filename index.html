@@ -200,8 +200,9 @@ header.top .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
 /* Income */
 .income-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .income-field label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; font-weight: 700; }
-.income-field .init, .col-head .init {
+.init {
   display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
   width: 18px; height: 18px; border-radius: 50%;
   font-size: 10.5px; font-weight: 800; margin-right: 6px; color: #FBF9EE;
 }
@@ -268,8 +269,8 @@ ul.entry-list li:last-child { border-bottom: none; }
   font-size: 12.5px; font-weight: 700; color: var(--ink-soft);
   margin: 18px 0 10px; padding-top: 14px; border-top: 1px solid var(--line);
 }
-.semi-section-label .hint { font-weight: 400; font-style: italic; font-size: 11px; display: block; margin-top: 2px; }
-.semi-add-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.semi-hint { font-size: 11px; color: var(--ink-soft); font-style: italic; line-height: 1.4; margin-top: 12px; }
+.semi-add-row { display: flex; gap: 8px; margin: 12px 0 4px; }
 .semi-add-row input { flex: 1; }
 .closed-month-note {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
@@ -287,8 +288,13 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 .semi-row-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
 .semi-row-head .entry-name { font-weight: 700; font-size: 13px; flex: 1; }
 .semi-row-head strong { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
-.icon-btn { border: none; background: none; color: var(--ink-soft); font-size: 14px; cursor: pointer; padding: 2px 4px; line-height: 1; }
+.icon-btn {
+  border: none; background: none; color: var(--ink-soft); cursor: pointer;
+  padding: 3px 4px; line-height: 1;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
 .icon-btn:hover { color: var(--primary-dark); }
+.icon-btn svg { display: block; }
 .semi-row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .semi-input-group { display: flex; align-items: center; gap: 6px; background: var(--surface); border-radius: 12px; padding: 4px 6px; }
 .semi-input-group input { padding: 6px 8px; font-size: 13px; border-radius: 10px; }
@@ -419,20 +425,18 @@ footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); mar
 </div>
 </div>
 
-<div class="semi-section-label">
-Semi-recurring expenses
-<span class="hint">Same expense every month, different amount each time — e.g. fuel, dog food.</span>
-</div>
-<div class="semi-add-row">
-<input type="text" id="semiName" placeholder="e.g. Fuel">
-<button class="btn-primary btn-small" id="addSemiBtn">Add</button>
-</div>
+<div class="semi-section-label">Semi-recurring expenses</div>
 <div class="closed-month-note" id="semiClosedNote" style="display:none;">
 <span id="semiClosedText">This month is closed.</span>
 <button id="semiUnlockBtn">Edit anyway</button>
 </div>
 <ul class="semi-list" id="semiList"></ul>
 <div class="semi-total-line">Semi-recurring total: <strong id="semiGrandTotal">₪0</strong></div>
+<div class="semi-add-row">
+<input type="text" id="semiName" placeholder="e.g. Fuel">
+<button class="btn-primary btn-small" id="addSemiBtn">Add</button>
+</div>
+<div class="semi-hint">Same expense every month, different amount each time — e.g. fuel, dog food.</div>
 </section>
 
 <div class="vine-divider">
@@ -741,7 +745,9 @@ const firebaseAuth = getAuth(firebaseApp);
         return '<li class="semi-row">' +
           '<div class="semi-row-head">' +
             '<span class="entry-name">' + escapeHtml(s.name) + '</span>' +
-            '<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">👁</button>' +
+            '<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">' +
+              '<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1.2 7.5C1.2 7.5 4.3 3 7.5 3C10.7 3 13.8 7.5 13.8 7.5C13.8 7.5 10.7 12 7.5 12C4.3 12 1.2 7.5 1.2 7.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="1.7" fill="currentColor"/></svg>' +
+            '</button>' +
             '<strong>' + fmt(total) + '</strong>' +
             '<button class="del-btn" data-del-semi="' + s.id + '" title="Remove expense type">✕</button>' +
           '</div>' +
