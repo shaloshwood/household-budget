@@ -16,179 +16,179 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #EFF5DC;
-  --surface: #F9FBEF;
-  --surface-2: #E3EFC5;
-  --ink: #5B2F41;
-  --ink-soft: #8C6B78;
-  --primary: #51A3A3;
-  --primary-dark: #3D7E7E;
-  --accent: #CB904D;
-  --accent-soft: #DFCC74;
-  --line: #DCD79F;
-  --danger: #A94F45;
-  --danger-soft: #E9CFC3;
-  --person-c: #6B3A4D;
-  --person-t: #C0793A;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+--bg: #EFF5DC;
+--surface: #F9FBEF;
+--surface-2: #E3EFC5;
+--ink: #5B2F41;
+--ink-soft: #8C6B78;
+--primary: #51A3A3;
+--primary-dark: #3D7E7E;
+--accent: #CB904D;
+--accent-soft: #DFCC74;
+--line: #DCD79F;
+--danger: #A94F45;
+--danger-soft: #E9CFC3;
+--person-c: #6B3A4D;
+--person-t: #C0793A;
+box-sizing: border-box;
+padding-top: env(safe-area-inset-top, 0px);
+padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #2B1B23;
-    --surface: #34222C;
-    --surface-2: #3D2933;
-    --ink: #E7F3CB;
-    --ink-soft: #C7A9B6;
-    --primary: #7FC4C4;
-    --primary-dark: #5FA9A9;
-    --accent: #E0A868;
-    --accent-soft: #4A4128;
-    --line: #4A3540;
-    --danger: #D48D80;
-    --danger-soft: #4A2E28;
-  }
+:root:not([data-theme="light"]) {
+--bg: #2B1B23;
+--surface: #34222C;
+--surface-2: #3D2933;
+--ink: #E7F3CB;
+--ink-soft: #C7A9B6;
+--primary: #7FC4C4;
+--primary-dark: #5FA9A9;
+--accent: #E0A868;
+--accent-soft: #4A4128;
+--line: #4A3540;
+--danger: #D48D80;
+--danger-soft: #4A2E28;
+}
 }
 :root[data-theme="dark"] {
-  --bg: #2B1B23;
-  --surface: #34222C;
-  --surface-2: #3D2933;
-  --ink: #E7F3CB;
-  --ink-soft: #C7A9B6;
-  --primary: #7FC4C4;
-  --primary-dark: #5FA9A9;
-  --accent: #E0A868;
-  --accent-soft: #4A4128;
-  --line: #4A3540;
-  --danger: #D48D80;
-  --danger-soft: #4A2E28;
+--bg: #2B1B23;
+--surface: #34222C;
+--surface-2: #3D2933;
+--ink: #E7F3CB;
+--ink-soft: #C7A9B6;
+--primary: #7FC4C4;
+--primary-dark: #5FA9A9;
+--accent: #E0A868;
+--accent-soft: #4A4128;
+--line: #4A3540;
+--danger: #D48D80;
+--danger-soft: #4A2E28;
 }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 * { box-sizing: inherit; }
 body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Nunito', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100%;
+margin: 0;
+background: var(--bg);
+color: var(--ink);
+font-family: 'Nunito', system-ui, -apple-system, sans-serif;
+-webkit-font-smoothing: antialiased;
+min-height: 100%;
 }
 .page {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px 18px 56px;
+max-width: 480px;
+margin: 0 auto;
+padding: 20px 18px 56px;
 }
 header.top {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 2px 18px;
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 6px 2px 18px;
 }
 header.top h1 {
-  font-family: 'Quicksand', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 21px;
-  margin: 0;
-  letter-spacing: -0.01em;
+font-family: 'Quicksand', system-ui, sans-serif;
+font-weight: 700;
+font-size: 21px;
+margin: 0;
+letter-spacing: -0.01em;
 }
 header.top .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
 .sprout { flex-shrink: 0; }
 
 .card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 24px 24px 24px 10px;
-  padding: 18px 18px 20px;
-  margin-bottom: 16px;
-  position: relative;
-  overflow: hidden;
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: 24px 24px 24px 10px;
+padding: 18px 18px 20px;
+margin-bottom: 16px;
+position: relative;
+overflow: hidden;
 }
 .card h2 {
-  font-family: 'Quicksand', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 15.5px;
-  margin: 0 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+font-family: 'Quicksand', system-ui, sans-serif;
+font-weight: 700;
+font-size: 15.5px;
+margin: 0 0 12px;
+display: flex;
+align-items: center;
+gap: 6px;
 }
 .card h2 .leaf-ic { flex-shrink: 0; }
 .card h2 .title-text { flex: 1; }
 .card h2 .reset-link {
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  font-size: 11.5px;
-  color: var(--ink-soft);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px 2px;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+font-family: 'Nunito', sans-serif;
+font-weight: 700;
+font-size: 11.5px;
+color: var(--ink-soft);
+background: none;
+border: none;
+cursor: pointer;
+padding: 4px 2px;
+text-decoration: underline;
+text-underline-offset: 2px;
 }
 .card h2 .reset-link:hover { color: var(--danger); }
 .card h2 .reset-link:disabled { opacity: 0.35; cursor: default; text-decoration: none; }
 
 /* Budget hero */
 .budget-card {
-  background: linear-gradient(160deg, var(--primary), var(--primary-dark));
-  color: #FBF9EE;
-  border: none;
-  border-radius: 28px 28px 28px 12px;
-  padding: 18px 20px 20px;
+background: linear-gradient(160deg, var(--primary), var(--primary-dark));
+color: #FBF9EE;
+border: none;
+border-radius: 28px 28px 28px 12px;
+padding: 18px 20px 20px;
 }
 .corner-leaf { position: absolute; top: 0; right: 0; pointer-events: none; }
 .month-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 4px;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 14px;
+margin-bottom: 4px;
 }
 .month-nav-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid rgba(251,249,238,0.4);
-  background: rgba(251,249,238,0.12);
-  color: #FBF9EE;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+border: 1px solid rgba(251,249,238,0.4);
+background: rgba(251,249,238,0.12);
+color: #FBF9EE;
+font-size: 16px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
 }
 .month-nav-btn:disabled { opacity: 0.25; cursor: default; }
 .month-nav .month-label {
-  font-family: 'Quicksand', system-ui, sans-serif;
-  font-weight: 600;
-  font-size: 13.5px;
-  letter-spacing: 0.01em;
-  min-width: 118px;
-  text-align: center;
+font-family: 'Quicksand', system-ui, sans-serif;
+font-weight: 600;
+font-size: 13.5px;
+letter-spacing: 0.01em;
+min-width: 118px;
+text-align: center;
 }
 .past-flag {
-  text-align: center;
-  font-size: 10.5px;
-  letter-spacing: 0.03em;
-  opacity: 0.75;
-  margin-bottom: 8px;
+text-align: center;
+font-size: 10.5px;
+letter-spacing: 0.03em;
+opacity: 0.75;
+margin-bottom: 8px;
 }
 .budget-card .amount {
-  font-family: 'Quicksand', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 38px;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-align: center;
+font-family: 'Quicksand', system-ui, sans-serif;
+font-weight: 700;
+font-size: 38px;
+line-height: 1.1;
+letter-spacing: -0.01em;
+text-align: center;
 }
 .budget-card .amount.negative { color: #F3D7C9; }
 .budget-card .baseline-note {
-  margin-top: 8px;
-  font-size: 12px;
-  opacity: 0.85;
-  text-align: center;
+margin-top: 8px;
+font-size: 12px;
+opacity: 0.85;
+text-align: center;
 }
 
 /* Carry-over */
@@ -201,22 +201,22 @@ header.top .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
 .income-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .income-field label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; font-weight: 700; }
 .init {
-  display: inline-flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  width: 18px; height: 18px; border-radius: 50%;
-  font-size: 10.5px; font-weight: 800; margin-right: 6px; color: #FBF9EE;
+display: inline-flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+width: 18px; height: 18px; border-radius: 50%;
+font-size: 10.5px; font-weight: 800; margin-right: 6px; color: #FBF9EE;
 }
 .init.c { background: var(--person-c); }
 .init.t { background: var(--person-t); }
 input[type="number"], input[type="text"] {
-  width: 100%;
-  font-family: 'Nunito', sans-serif;
-  font-size: 15px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: var(--surface-2);
-  color: var(--ink);
+width: 100%;
+font-family: 'Nunito', sans-serif;
+font-size: 15px;
+padding: 10px 12px;
+border-radius: 14px;
+border: 1px solid var(--line);
+background: var(--surface-2);
+color: var(--ink);
 }
 input:disabled { opacity: 0.55; }
 input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
@@ -229,16 +229,16 @@ input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 .add-row input[name="price"] { flex: 0.9; }
 .person-toggle { display: flex; gap: 6px; margin-bottom: 10px; }
 .person-btn {
-  flex: 1; padding: 8px 0; border-radius: 12px; border: 1px solid var(--line);
-  background: var(--surface-2); color: var(--ink-soft); font-weight: 700; font-size: 13px; cursor: pointer;
+flex: 1; padding: 8px 0; border-radius: 12px; border: 1px solid var(--line);
+background: var(--surface-2); color: var(--ink-soft); font-weight: 700; font-size: 13px; cursor: pointer;
 }
 .person-btn.selected { color: #FBF9EE; }
 #btnPersonC.selected { background: var(--person-c); border-color: var(--person-c); }
 #btnPersonT.selected { background: var(--person-t); border-color: var(--person-t); }
 .btn-primary {
-  width: 100%; padding: 10px 0; border-radius: 14px; border: none;
-  background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 14px; cursor: pointer;
-  font-family: 'Quicksand', sans-serif;
+width: 100%; padding: 10px 0; border-radius: 14px; border: none;
+background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 14px; cursor: pointer;
+font-family: 'Quicksand', sans-serif;
 }
 .btn-primary:disabled { opacity: 0.4; cursor: default; }
 .btn-primary:active:not(:disabled) { opacity: 0.85; }
@@ -247,15 +247,15 @@ input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 .purchase-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
 .p-col { background: var(--surface-2); border-radius: 16px 16px 16px 6px; padding: 10px 10px 12px; }
 .col-head {
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px;
+display: flex; align-items: center; justify-content: space-between;
+font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px;
 }
 .col-head strong { color: var(--ink); }
 .col-head .init { width: 26px; height: 26px; font-size: 13px; margin-right: 0; }
 ul.entry-list { list-style: none; margin: 0; padding: 0; }
 ul.entry-list li {
-  display: flex; align-items: center; gap: 6px; padding: 7px 0;
-  border-bottom: 1px solid var(--line); font-size: 12.5px;
+display: flex; align-items: center; gap: 6px; padding: 7px 0;
+border-bottom: 1px solid var(--line); font-size: 12.5px;
 }
 ul.entry-list li:last-child { border-bottom: none; }
 .entry-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -266,21 +266,21 @@ ul.entry-list li:last-child { border-bottom: none; }
 
 /* Semi-recurring purchases */
 .semi-section-label {
-  font-size: 12.5px; font-weight: 700; color: var(--ink-soft);
-  margin: 18px 0 10px; padding-top: 14px; border-top: 1px solid var(--line);
+font-size: 12.5px; font-weight: 700; color: var(--ink-soft);
+margin: 18px 0 10px; padding-top: 14px; border-top: 1px solid var(--line);
 }
 .semi-hint { font-size: 11px; color: var(--ink-soft); font-style: italic; line-height: 1.4; margin-top: 12px; }
 .semi-add-row { display: flex; gap: 8px; margin: 12px 0 4px; }
 .semi-add-row input { flex: 1; }
 .closed-month-note {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  font-size: 11.5px; color: var(--ink-soft); font-style: italic;
-  background: var(--surface-2); border-radius: 12px; padding: 8px 10px; margin-bottom: 10px;
+display: flex; align-items: center; justify-content: space-between; gap: 8px;
+font-size: 11.5px; color: var(--ink-soft); font-style: italic;
+background: var(--surface-2); border-radius: 12px; padding: 8px 10px; margin-bottom: 10px;
 }
 .closed-month-note button {
-  font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 11px; font-style: normal;
-  color: var(--primary-dark); background: none; border: 1px solid var(--primary-dark); border-radius: 8px;
-  padding: 4px 8px; cursor: pointer; flex-shrink: 0;
+font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 11px; font-style: normal;
+color: var(--primary-dark); background: none; border: 1px solid var(--primary-dark); border-radius: 8px;
+padding: 4px 8px; cursor: pointer; flex-shrink: 0;
 }
 ul.semi-list { list-style: none; margin: 0; padding: 0; }
 ul.semi-list li.semi-row { padding: 10px 0; border-bottom: 1px solid var(--line); }
@@ -289,9 +289,9 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 .semi-row-head .entry-name { font-weight: 700; font-size: 13px; flex: 1; }
 .semi-row-head strong { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
 .icon-btn {
-  border: none; background: none; color: var(--ink-soft); cursor: pointer;
-  padding: 3px 4px; line-height: 1;
-  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+border: none; background: none; color: var(--ink-soft); cursor: pointer;
+padding: 3px 4px; line-height: 1;
+display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .icon-btn:hover { color: var(--primary-dark); }
 .icon-btn svg { display: block; }
@@ -299,9 +299,9 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 .semi-input-group { display: flex; align-items: center; gap: 6px; background: var(--surface); border-radius: 12px; padding: 4px 6px; }
 .semi-input-group input { padding: 6px 8px; font-size: 13px; border-radius: 10px; }
 .semi-input-group button {
-  flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; border: none;
-  background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 15px; cursor: pointer;
-  font-family: 'Quicksand', sans-serif; line-height: 1;
+flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; border: none;
+background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 15px; cursor: pointer;
+font-family: 'Quicksand', sans-serif; line-height: 1;
 }
 .semi-input-group button:disabled { opacity: 0.35; cursor: default; }
 .semi-total-line { margin-top: 12px; font-size: 12.5px; color: var(--ink-soft); }
@@ -314,18 +314,18 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 ul.entry-list.wide { border-top: 1px solid var(--line); margin-top: 14px; }
 ul.entry-list.wide li { padding: 10px 0; font-size: 13.5px; }
 .tag {
-  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 800; background: var(--accent-soft); color: var(--primary-dark);
+flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+display: inline-flex; align-items: center; justify-content: center;
+font-size: 11px; font-weight: 800; background: var(--accent-soft); color: var(--primary-dark);
 }
 .recurring-total { margin-top: 12px; font-size: 12.5px; color: var(--ink-soft); }
 .recurring-total strong { color: var(--ink); }
 
 .next-month {
-  width: 100%; padding: 14px 0; border-radius: 18px 18px 18px 8px; border: none;
-  background: var(--primary); color: #FBF9EE;
-  font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 15.5px; cursor: pointer;
-  margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 8px;
+width: 100%; padding: 14px 0; border-radius: 18px 18px 18px 8px; border: none;
+background: var(--primary); color: #FBF9EE;
+font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 15.5px; cursor: pointer;
+margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .next-month:active { opacity: 0.9; }
 
@@ -334,24 +334,35 @@ ul.entry-list.wide li { padding: 10px 0; font-size: 13.5px; }
 footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); margin-top: 18px; }
 
 .confirm-overlay {
-  position: fixed; inset: 0; background: rgba(43,27,35,0.45);
-  display: none; align-items: center; justify-content: center; z-index: 50; padding: 20px;
+position: fixed; inset: 0; background: rgba(43,27,35,0.45);
+display: none; align-items: center; justify-content: center; z-index: 50; padding: 20px;
 }
 .confirm-overlay.open { display: flex; }
 .confirm-box {
-  background: var(--surface); border-radius: 20px 20px 20px 8px; border: 1px solid var(--line);
-  padding: 20px; max-width: 320px; width: 100%;
+background: var(--surface); border-radius: 20px 20px 20px 8px; border: 1px solid var(--line);
+padding: 20px; max-width: 320px; width: 100%;
 }
 .confirm-box p {
-  font-size: 14px; color: var(--ink); margin: 0 0 16px; line-height: 1.4;
+font-size: 14px; color: var(--ink); margin: 0 0 16px; line-height: 1.4;
 }
 .confirm-actions { display: flex; gap: 10px; }
 .confirm-actions button {
-  flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid var(--line);
-  font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 13.5px; cursor: pointer;
+flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid var(--line);
+font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 13.5px; cursor: pointer;
 }
 .confirm-cancel { background: var(--surface-2); color: var(--ink-soft); }
 .confirm-ok { background: var(--primary); color: #FBF9EE; border-color: var(--primary); }
+
+#authOverlay { z-index: 200; }
+#authOverlay .confirm-box { text-align: center; }
+.google-btn {
+display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+width: 100%; padding: 12px 0; border-radius: 14px; border: 1px solid var(--line);
+background: var(--surface-2); color: var(--ink); font-weight: 800; font-size: 14px; cursor: pointer;
+font-family: 'Quicksand', sans-serif;
+}
+.google-btn:active { opacity: 0.85; }
+#authError { color: var(--danger); font-size: 12.5px; margin-top: 14px; display: none; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -539,505 +550,550 @@ Move to October
 </div>
 </div>
 
+<div class="confirm-overlay open" id="authOverlay">
+<div class="confirm-box">
+<p>Sign in to sync your household budget.</p>
+<button class="google-btn" id="googleSignInBtn">
+<svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+Sign in with Google
+</button>
+<p id="authError"></p>
+</div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ---- Fill this in with your own Firebase project's config ----
 // Firebase console → Project settings → General → "Your apps" → SDK setup and configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAvAlYMtRjtSoTEEiqKJMmJzbotxn4PPHY",
-  authDomain: "household-budget-14e74.firebaseapp.com",
-  projectId: "household-budget-14e74",
-  storageBucket: "household-budget-14e74.firebasestorage.app",
-  messagingSenderId: "151940354445",
-  appId: "1:151940354445:web:c8a39159a1086a2a7b6dc4"
+apiKey: "AIzaSyAvAlYMtRjtSoTEEiqKJMmJzbotxn4PPHY",
+authDomain: "household-budget-14e74.firebaseapp.com",
+projectId: "household-budget-14e74",
+storageBucket: "household-budget-14e74.firebasestorage.app",
+messagingSenderId: "151940354445",
+appId: "1:151940354445:web:c8a39159a1086a2a7b6dc4"
 };
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
 
+// Only these two Google accounts may read/write this household's data.
+// Matching Firestore rule must be published for this to actually be enforced server-side.
+const ALLOWED_EMAILS = ["shalosh.wood@gmail.com", "levy.tanya7@gmail.com"];
+const googleProvider = new GoogleAuthProvider();
+
 (function () {
-  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-  const CUR = "₪";
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const CUR = "₪";
 
-  function fmt(n) {
-    const v = Math.round((Number(n) || 0) * 100) / 100;
-    return CUR + v.toLocaleString('en-US', { maximumFractionDigits: 2 });
-  }
-  function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-  function monthKey(idx, yr) { return yr + '-' + String(idx + 1).padStart(2, '0'); }
-  function freshMonth(idx, yr) {
-    return { key: monthKey(idx, yr), monthIndex: idx, year: yr, carryOver: 0, incomeC: 0, incomeT: 0, purchases: [], semiEntries: [] };
-  }
-  function defaultState() {
-    const now = new Date();
-    return { recurring: [], semiRecurring: [], months: [freshMonth(8, now.getFullYear())] };
-  }
+function fmt(n) {
+const v = Math.round((Number(n) || 0) * 100) / 100;
+return CUR + v.toLocaleString('en-US', { maximumFractionDigits: 2 });
+}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function monthKey(idx, yr) { return yr + '-' + String(idx + 1).padStart(2, '0'); }
+function freshMonth(idx, yr) {
+return { key: monthKey(idx, yr), monthIndex: idx, year: yr, carryOver: 0, incomeC: 0, incomeT: 0, purchases: [], semiEntries: [] };
+}
+function defaultState() {
+const now = new Date();
+return { recurring: [], semiRecurring: [], months: [freshMonth(8, now.getFullYear())] };
+}
 
-  let state = defaultState();
-  let docRef = null, usingDb = false;
-  let selectedPerson = 'C';
-  let viewingIndex = 0;
-  let wasAtLatest = true;
-  // Month keys the user has explicitly confirmed they want to edit even though the
-  // month is closed. Session-only — not persisted, and only applies to semi-recurring entries.
-  let unlockedMonths = new Set();
-  const LOCAL_KEY = 'household-budget-state-v2';
+let state = defaultState();
+let docRef = null, usingDb = false;
+let selectedPerson = 'C';
+let viewingIndex = 0;
+let wasAtLatest = true;
+// Month keys the user has explicitly confirmed they want to edit even though the
+// month is closed. Session-only — not persisted, and only applies to semi-recurring entries.
+let unlockedMonths = new Set();
+const LOCAL_KEY = 'household-budget-state-v2';
 
-  function loadLocal() {
-    try { const raw = localStorage.getItem(LOCAL_KEY); if (raw) state = JSON.parse(raw); } catch (e) {}
-  }
-  function saveLocal() {
-    try { localStorage.setItem(LOCAL_KEY, JSON.stringify(state)); } catch (e) {}
-  }
-  function setStatus(t) { const el = document.getElementById('statusNote'); if (el) el.textContent = t; }
+function loadLocal() {
+try { const raw = localStorage.getItem(LOCAL_KEY); if (raw) state = JSON.parse(raw); } catch (e) {}
+}
+function saveLocal() {
+try { localStorage.setItem(LOCAL_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function setStatus(t) { const el = document.getElementById('statusNote'); if (el) el.textContent = t; }
 
-  // In-page confirm dialog (keeps the look consistent instead of the browser's native confirm()).
-  function askConfirm(message, onYes) {
-    const overlay = document.getElementById('confirmOverlay');
-    document.getElementById('confirmMessage').textContent = message;
-    overlay.classList.add('open');
-    const okBtn = document.getElementById('confirmOkBtn');
-    const cancelBtn = document.getElementById('confirmCancelBtn');
-    function cleanup() {
-      overlay.classList.remove('open');
-      okBtn.removeEventListener('click', onOk);
-      cancelBtn.removeEventListener('click', onCancel);
-    }
-    function onOk() { cleanup(); onYes(); }
-    function onCancel() { cleanup(); }
-    okBtn.addEventListener('click', onOk);
-    cancelBtn.addEventListener('click', onCancel);
-  }
+// In-page confirm dialog (keeps the look consistent instead of the browser's native confirm()).
+function askConfirm(message, onYes) {
+const overlay = document.getElementById('confirmOverlay');
+document.getElementById('confirmMessage').textContent = message;
+overlay.classList.add('open');
+const okBtn = document.getElementById('confirmOkBtn');
+const cancelBtn = document.getElementById('confirmCancelBtn');
+function cleanup() {
+overlay.classList.remove('open');
+okBtn.removeEventListener('click', onOk);
+cancelBtn.removeEventListener('click', onCancel);
+}
+function onOk() { cleanup(); onYes(); }
+function onCancel() { cleanup(); }
+okBtn.addEventListener('click', onOk);
+cancelBtn.addEventListener('click', onCancel);
+}
 
-  function applyIncoming(newState) {
-    if (wasAtLatest || viewingIndex > newState.months.length - 1) {
-      viewingIndex = newState.months.length - 1;
-    }
-    state = newState;
-    wasAtLatest = (viewingIndex === state.months.length - 1);
-  }
+function applyIncoming(newState) {
+if (wasAtLatest || viewingIndex > newState.months.length - 1) {
+viewingIndex = newState.months.length - 1;
+}
+state = newState;
+wasAtLatest = (viewingIndex === state.months.length - 1);
+}
 
-  function saveState(newState) {
-    applyIncoming(newState);
-    if (usingDb && docRef) {
-      setDoc(docRef, newState).catch(function () { setStatus('Could not sync just now — will retry on next change.'); });
-    } else { saveLocal(); }
-    render();
-  }
+function saveState(newState) {
+applyIncoming(newState);
+if (usingDb && docRef) {
+setDoc(docRef, newState).catch(function () { setStatus('Could not sync just now — will retry on next change.'); });
+} else { saveLocal(); }
+render();
+}
 
-  function recurringTotal() { return (state.recurring || []).reduce(function (s, r) { return s + (Number(r.amount) || 0); }, 0); }
-  function purchasesTotal(m, person) {
-    return (m.purchases || []).filter(function (p) { return !person || p.person === person; })
-      .reduce(function (s, p) { return s + (Number(p.price) || 0); }, 0);
-  }
-  function semiTypeTotal(m, semiId, person) {
-    return (m.semiEntries || []).filter(function (e) { return e.semiId === semiId && (!person || e.person === person); })
-      .reduce(function (s, e) { return s + (Number(e.amount) || 0); }, 0);
-  }
-  function semiGrandTotal(m) {
-    return (m.semiEntries || []).reduce(function (s, e) { return s + (Number(e.amount) || 0); }, 0);
-  }
-  function computeBudget(m) {
-    return (Number(m.carryOver) || 0) + (Number(m.incomeC) || 0) + (Number(m.incomeT) || 0)
-      - recurringTotal() - purchasesTotal(m) - semiGrandTotal(m);
-  }
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; });
-  }
+function recurringTotal() { return (state.recurring || []).reduce(function (s, r) { return s + (Number(r.amount) || 0); }, 0); }
+function purchasesTotal(m, person) {
+return (m.purchases || []).filter(function (p) { return !person || p.person === person; })
+.reduce(function (s, p) { return s + (Number(p.price) || 0); }, 0);
+}
+function semiTypeTotal(m, semiId, person) {
+return (m.semiEntries || []).filter(function (e) { return e.semiId === semiId && (!person || e.person === person); })
+.reduce(function (s, e) { return s + (Number(e.amount) || 0); }, 0);
+}
+function semiGrandTotal(m) {
+return (m.semiEntries || []).reduce(function (s, e) { return s + (Number(e.amount) || 0); }, 0);
+}
+function computeBudget(m) {
+return (Number(m.carryOver) || 0) + (Number(m.incomeC) || 0) + (Number(m.incomeT) || 0)
+- recurringTotal() - purchasesTotal(m) - semiGrandTotal(m);
+}
+function escapeHtml(s) {
+return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; });
+}
 
-  function updateCurrentMonth(patch) {
-    const months = state.months.slice();
-    const idx = months.length - 1;
-    months[idx] = Object.assign({}, months[idx], patch);
-    saveState(Object.assign({}, state, { months: months }));
-  }
-  function updateMonthAt(idx, patch) {
-    const months = state.months.slice();
-    months[idx] = Object.assign({}, months[idx], patch);
-    saveState(Object.assign({}, state, { months: months }));
-  }
+function updateCurrentMonth(patch) {
+const months = state.months.slice();
+const idx = months.length - 1;
+months[idx] = Object.assign({}, months[idx], patch);
+saveState(Object.assign({}, state, { months: months }));
+}
+function updateMonthAt(idx, patch) {
+const months = state.months.slice();
+months[idx] = Object.assign({}, months[idx], patch);
+saveState(Object.assign({}, state, { months: months }));
+}
 
-  function render() {
-    const months = state.months;
-    const lastIdx = months.length - 1;
-    viewingIndex = Math.max(0, Math.min(viewingIndex, lastIdx));
-    const m = months[viewingIndex];
-    const isCurrent = viewingIndex === lastIdx;
-    const semiUnlocked = isCurrent || unlockedMonths.has(m.key);
+function render() {
+const months = state.months;
+const lastIdx = months.length - 1;
+viewingIndex = Math.max(0, Math.min(viewingIndex, lastIdx));
+const m = months[viewingIndex];
+const isCurrent = viewingIndex === lastIdx;
+const semiUnlocked = isCurrent || unlockedMonths.has(m.key);
 
-    const label = MONTHS[m.monthIndex] + ' ' + m.year;
-    document.getElementById('monthSub').textContent = label + (isCurrent ? '' : ' (viewing)');
-    document.getElementById('monthLabel').textContent = label;
-    document.getElementById('prevMonthBtn').disabled = viewingIndex === 0;
-    document.getElementById('nextMonthNavBtn').disabled = viewingIndex === lastIdx;
-    document.getElementById('pastFlag').style.display = isCurrent ? 'none' : 'block';
+const label = MONTHS[m.monthIndex] + ' ' + m.year;
+document.getElementById('monthSub').textContent = label + (isCurrent ? '' : ' (viewing)');
+document.getElementById('monthLabel').textContent = label;
+document.getElementById('prevMonthBtn').disabled = viewingIndex === 0;
+document.getElementById('nextMonthNavBtn').disabled = viewingIndex === lastIdx;
+document.getElementById('pastFlag').style.display = isCurrent ? 'none' : 'block';
 
-    const budget = computeBudget(m);
-    const budgetEl = document.getElementById('budgetNumber');
-    budgetEl.textContent = fmt(budget);
-    budgetEl.classList.toggle('negative', budget < 0);
-    document.getElementById('baselineNote').textContent = isCurrent
-      ? (m.carryOver ? 'Carry-over included: ' + fmt(m.carryOver) : 'Set a carry-over below to begin.')
-      : 'This month is closed.';
+const budget = computeBudget(m);
+const budgetEl = document.getElementById('budgetNumber');
+budgetEl.textContent = fmt(budget);
+budgetEl.classList.toggle('negative', budget < 0);
+document.getElementById('baselineNote').textContent = isCurrent
+? (m.carryOver ? 'Carry-over included: ' + fmt(m.carryOver) : 'Set a carry-over below to begin.')
+: 'This month is closed.';
 
-    // carry hint: show previous month's ending balance, only on current month, only if a previous month exists
-    const hintEl = document.getElementById('carryHint');
-    if (isCurrent && viewingIndex > 0) {
-      const prevBalance = computeBudget(months[viewingIndex - 1]);
-      hintEl.style.display = 'block';
-      hintEl.textContent = 'Last month ended with ' + fmt(prevBalance) + ' — enter what you want to carry over.';
-    } else { hintEl.style.display = 'none'; }
+// carry hint: show previous month's ending balance, only on current month, only if a previous month exists
+const hintEl = document.getElementById('carryHint');
+if (isCurrent && viewingIndex > 0) {
+const prevBalance = computeBudget(months[viewingIndex - 1]);
+hintEl.style.display = 'block';
+hintEl.textContent = 'Last month ended with ' + fmt(prevBalance) + ' — enter what you want to carry over.';
+} else { hintEl.style.display = 'none'; }
 
-    const carryEl = document.getElementById('carryOver');
-    const incC = document.getElementById('incomeC');
-    const incT = document.getElementById('incomeT');
-    if (document.activeElement !== carryEl) carryEl.value = m.carryOver || '';
-    if (document.activeElement !== incC) incC.value = m.incomeC || '';
-    if (document.activeElement !== incT) incT.value = m.incomeT || '';
-    [carryEl, incC, incT].forEach(function (el) { el.disabled = !isCurrent; });
-    document.getElementById('incomeSum').textContent = fmt((m.incomeC || 0) + (m.incomeT || 0));
+const carryEl = document.getElementById('carryOver');
+const incC = document.getElementById('incomeC');
+const incT = document.getElementById('incomeT');
+if (document.activeElement !== carryEl) carryEl.value = m.carryOver || '';
+if (document.activeElement !== incC) incC.value = m.incomeC || '';
+if (document.activeElement !== incT) incT.value = m.incomeT || '';
+[carryEl, incC, incT].forEach(function (el) { el.disabled = !isCurrent; });
+document.getElementById('incomeSum').textContent = fmt((m.incomeC || 0) + (m.incomeT || 0));
 
-    // purchases, split columns
-    function renderCol(person, elId) {
-      const list = (m.purchases || []).filter(function (p) { return p.person === person; });
-      const el = document.getElementById(elId);
-      if (list.length === 0) { el.innerHTML = '<li class="empty-note">No purchases.</li>'; return; }
-      el.innerHTML = list.map(function (p) {
-        return '<li><span class="entry-name">' + escapeHtml(p.item) + '</span>' +
-          '<span class="entry-price">' + fmt(p.price) + '</span>' +
-          (isCurrent ? '<button class="del-btn" data-del-purchase="' + p.id + '">✕</button>' : '') + '</li>';
-      }).join('');
-    }
-    renderCol('C', 'purchasesListC');
-    renderCol('T', 'purchasesListT');
-    document.getElementById('totalC').textContent = fmt(purchasesTotal(m, 'C'));
-    document.getElementById('totalT').textContent = fmt(purchasesTotal(m, 'T'));
+// purchases, split columns
+function renderCol(person, elId) {
+const list = (m.purchases || []).filter(function (p) { return p.person === person; });
+const el = document.getElementById(elId);
+if (list.length === 0) { el.innerHTML = '<li class="empty-note">No purchases.</li>'; return; }
+el.innerHTML = list.map(function (p) {
+return '<li><span class="entry-name">' + escapeHtml(p.item) + '</span>' +
+'<span class="entry-price">' + fmt(p.price) + '</span>' +
+(isCurrent ? '<button class="del-btn" data-del-purchase="' + p.id + '">✕</button>' : '') + '</li>';
+}).join('');
+}
+renderCol('C', 'purchasesListC');
+renderCol('T', 'purchasesListT');
+document.getElementById('totalC').textContent = fmt(purchasesTotal(m, 'C'));
+document.getElementById('totalT').textContent = fmt(purchasesTotal(m, 'T'));
 
-    // semi-recurring: closed-month note
-    const closedNote = document.getElementById('semiClosedNote');
-    const closedText = document.getElementById('semiClosedText');
-    const unlockBtn = document.getElementById('semiUnlockBtn');
-    if (!isCurrent) {
-      closedNote.style.display = 'flex';
-      if (semiUnlocked) {
-        closedText.textContent = 'Editing a closed month.';
-        unlockBtn.style.display = 'none';
-      } else {
-        closedText.textContent = 'This month is closed.';
-        unlockBtn.style.display = 'inline-block';
-      }
-    } else {
-      closedNote.style.display = 'none';
-    }
+// semi-recurring: closed-month note
+const closedNote = document.getElementById('semiClosedNote');
+const closedText = document.getElementById('semiClosedText');
+const unlockBtn = document.getElementById('semiUnlockBtn');
+if (!isCurrent) {
+closedNote.style.display = 'flex';
+if (semiUnlocked) {
+closedText.textContent = 'Editing a closed month.';
+unlockBtn.style.display = 'none';
+} else {
+closedText.textContent = 'This month is closed.';
+unlockBtn.style.display = 'inline-block';
+}
+} else {
+closedNote.style.display = 'none';
+}
 
-    // semi-recurring list
-    const semiListEl = document.getElementById('semiList');
-    const types = state.semiRecurring || [];
-    if (types.length === 0) {
-      semiListEl.innerHTML = '<li class="empty-note" style="border:none;">No semi-recurring expenses added.</li>';
-    } else {
-      const disabledAttr = semiUnlocked ? '' : 'disabled';
-      semiListEl.innerHTML = types.map(function (s) {
-        const total = semiTypeTotal(m, s.id);
-        return '<li class="semi-row">' +
-          '<div class="semi-row-head">' +
-            '<span class="entry-name">' + escapeHtml(s.name) + '</span>' +
-            '<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">' +
-              '<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1.2 7.5C1.2 7.5 4.3 3 7.5 3C10.7 3 13.8 7.5 13.8 7.5C13.8 7.5 10.7 12 7.5 12C4.3 12 1.2 7.5 1.2 7.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="1.7" fill="currentColor"/></svg>' +
-            '</button>' +
-            '<strong>' + fmt(total) + '</strong>' +
-            '<button class="del-btn" data-del-semi="' + s.id + '" title="Remove expense type">✕</button>' +
-          '</div>' +
-          '<div class="semi-row-grid">' +
-            '<div class="semi-input-group">' +
-              '<span class="init c">C</span>' +
-              '<input type="number" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" data-semi-person="C" ' + disabledAttr + '>' +
-              '<button data-semi-add="' + s.id + '" data-semi-person="C" ' + disabledAttr + '>+</button>' +
-            '</div>' +
-            '<div class="semi-input-group">' +
-              '<span class="init t">T</span>' +
-              '<input type="number" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" data-semi-person="T" ' + disabledAttr + '>' +
-              '<button data-semi-add="' + s.id + '" data-semi-person="T" ' + disabledAttr + '>+</button>' +
-            '</div>' +
-          '</div>' +
-        '</li>';
-      }).join('');
-    }
-    document.getElementById('semiGrandTotal').textContent = fmt(semiGrandTotal(m));
+// semi-recurring list
+const semiListEl = document.getElementById('semiList');
+const types = state.semiRecurring || [];
+if (types.length === 0) {
+semiListEl.innerHTML = '<li class="empty-note" style="border:none;">No semi-recurring expenses added.</li>';
+} else {
+const disabledAttr = semiUnlocked ? '' : 'disabled';
+semiListEl.innerHTML = types.map(function (s) {
+const total = semiTypeTotal(m, s.id);
+return '<li class="semi-row">' +
+'<div class="semi-row-head">' +
+'<span class="entry-name">' + escapeHtml(s.name) + '</span>' +
+'<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">' +
+'<svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1.2 7.5C1.2 7.5 4.3 3 7.5 3C10.7 3 13.8 7.5 13.8 7.5C13.8 7.5 10.7 12 7.5 12C4.3 12 1.2 7.5 1.2 7.5Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="7.5" cy="7.5" r="1.7" fill="currentColor"/></svg>' +
+'</button>' +
+'<strong>' + fmt(total) + '</strong>' +
+'<button class="del-btn" data-del-semi="' + s.id + '" title="Remove expense type">✕</button>' +
+'</div>' +
+'<div class="semi-row-grid">' +
+'<div class="semi-input-group">' +
+'<span class="init c">C</span>' +
+'<input type="number" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" data-semi-person="C" ' + disabledAttr + '>' +
+'<button data-semi-add="' + s.id + '" data-semi-person="C" ' + disabledAttr + '>+</button>' +
+'</div>' +
+'<div class="semi-input-group">' +
+'<span class="init t">T</span>' +
+'<input type="number" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" data-semi-person="T" ' + disabledAttr + '>' +
+'<button data-semi-add="' + s.id + '" data-semi-person="T" ' + disabledAttr + '>+</button>' +
+'</div>' +
+'</div>' +
+'</li>';
+}).join('');
+}
+document.getElementById('semiGrandTotal').textContent = fmt(semiGrandTotal(m));
 
-    // recurring (global list, always editable regardless of viewed month)
-    const rList = document.getElementById('recurringList');
-    if (!state.recurring || state.recurring.length === 0) {
-      rList.innerHTML = '<li class="empty-note" style="border:none;">No recurring expenses added.</li>';
-    } else {
-      rList.innerHTML = state.recurring.map(function (r) {
-        return '<li><span class="tag">🌿</span><span class="entry-name">' + escapeHtml(r.name) + '</span>' +
-          '<span class="entry-price">' + fmt(r.amount) + '</span>' +
-          '<button class="del-btn" data-del-recurring="' + r.id + '">✕</button></li>';
-      }).join('');
-    }
-    document.getElementById('recurringTotal').textContent = fmt(recurringTotal());
+// recurring (global list, always editable regardless of viewed month)
+const rList = document.getElementById('recurringList');
+if (!state.recurring || state.recurring.length === 0) {
+rList.innerHTML = '<li class="empty-note" style="border:none;">No recurring expenses added.</li>';
+} else {
+rList.innerHTML = state.recurring.map(function (r) {
+return '<li><span class="tag">🌿</span><span class="entry-name">' + escapeHtml(r.name) + '</span>' +
+'<span class="entry-price">' + fmt(r.amount) + '</span>' +
+'<button class="del-btn" data-del-recurring="' + r.id + '">✕</button></li>';
+}).join('');
+}
+document.getElementById('recurringTotal').textContent = fmt(recurringTotal());
 
-    // disable add/reset controls that only make sense on the current month
-    ['purchaseItem','purchasePrice','btnPersonC','btnPersonT','addPurchaseBtn','resetPurchases','resetIncome'].forEach(function (id) {
-      document.getElementById(id).disabled = !isCurrent;
-    });
+// disable add/reset controls that only make sense on the current month
+['purchaseItem','purchasePrice','btnPersonC','btnPersonT','addPurchaseBtn','resetPurchases','resetIncome'].forEach(function (id) {
+document.getElementById(id).disabled = !isCurrent;
+});
 
-    const nextIdx = (m.monthIndex + 1) % 12;
-    document.querySelector('#nextMonthBtn').lastChild.textContent = ' Move to ' + MONTHS[nextIdx];
-    document.getElementById('nextMonthBtn').style.display = isCurrent ? 'flex' : 'none';
-  }
+const nextIdx = (m.monthIndex + 1) % 12;
+document.querySelector('#nextMonthBtn').lastChild.textContent = ' Move to ' + MONTHS[nextIdx];
+document.getElementById('nextMonthBtn').style.display = isCurrent ? 'flex' : 'none';
+}
 
-  // ---- events ----
-  document.getElementById('prevMonthBtn').addEventListener('click', function () {
-    if (viewingIndex > 0) { viewingIndex--; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
-  });
-  document.getElementById('nextMonthNavBtn').addEventListener('click', function () {
-    if (viewingIndex < state.months.length - 1) { viewingIndex++; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
-  });
+// ---- events ----
+document.getElementById('prevMonthBtn').addEventListener('click', function () {
+if (viewingIndex > 0) { viewingIndex--; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
+});
+document.getElementById('nextMonthNavBtn').addEventListener('click', function () {
+if (viewingIndex < state.months.length - 1) { viewingIndex++; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
+});
 
-  document.getElementById('carryOver').addEventListener('change', function (e) {
-    updateCurrentMonth({ carryOver: Number(e.target.value) || 0 });
-  });
-  document.getElementById('incomeC').addEventListener('change', function (e) {
-    updateCurrentMonth({ incomeC: Number(e.target.value) || 0 });
-  });
-  document.getElementById('incomeT').addEventListener('change', function (e) {
-    updateCurrentMonth({ incomeT: Number(e.target.value) || 0 });
-  });
-  document.getElementById('resetIncome').addEventListener('click', function () {
-    askConfirm('Reset carry-over and both income fields to 0 for this month?', function () {
-      updateCurrentMonth({ carryOver: 0, incomeC: 0, incomeT: 0 });
-    });
-  });
+document.getElementById('carryOver').addEventListener('change', function (e) {
+updateCurrentMonth({ carryOver: Number(e.target.value) || 0 });
+});
+document.getElementById('incomeC').addEventListener('change', function (e) {
+updateCurrentMonth({ incomeC: Number(e.target.value) || 0 });
+});
+document.getElementById('incomeT').addEventListener('change', function (e) {
+updateCurrentMonth({ incomeT: Number(e.target.value) || 0 });
+});
+document.getElementById('resetIncome').addEventListener('click', function () {
+askConfirm('Reset carry-over and both income fields to 0 for this month?', function () {
+updateCurrentMonth({ carryOver: 0, incomeC: 0, incomeT: 0 });
+});
+});
 
-  document.getElementById('btnPersonC').addEventListener('click', function () {
-    selectedPerson = 'C';
-    document.getElementById('btnPersonC').classList.add('selected');
-    document.getElementById('btnPersonT').classList.remove('selected');
-  });
-  document.getElementById('btnPersonT').addEventListener('click', function () {
-    selectedPerson = 'T';
-    document.getElementById('btnPersonT').classList.add('selected');
-    document.getElementById('btnPersonC').classList.remove('selected');
-  });
-  document.getElementById('addPurchaseBtn').addEventListener('click', function () {
-    const itemEl = document.getElementById('purchaseItem');
-    const priceEl = document.getElementById('purchasePrice');
-    const item = itemEl.value.trim();
-    const price = Number(priceEl.value);
-    if (!item || !(price > 0)) return;
-    const entry = { id: genId(), item: item, price: price, person: selectedPerson };
-    const months = state.months.slice();
-    const idx = months.length - 1;
-    months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).concat([entry]) });
-    saveState(Object.assign({}, state, { months: months }));
-    itemEl.value = ''; priceEl.value = ''; itemEl.focus();
-  });
-  function delPurchase(id) {
-    const months = state.months.slice();
-    const idx = months.length - 1;
-    months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).filter(function (p) { return p.id !== id; }) });
-    saveState(Object.assign({}, state, { months: months }));
-  }
-  document.getElementById('purchasesListC').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
-  });
-  document.getElementById('purchasesListT').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
-  });
-  document.getElementById('resetPurchases').addEventListener('click', function () {
-    askConfirm('Clear all purchases this month?', function () { updateCurrentMonth({ purchases: [] }); });
-  });
+document.getElementById('btnPersonC').addEventListener('click', function () {
+selectedPerson = 'C';
+document.getElementById('btnPersonC').classList.add('selected');
+document.getElementById('btnPersonT').classList.remove('selected');
+});
+document.getElementById('btnPersonT').addEventListener('click', function () {
+selectedPerson = 'T';
+document.getElementById('btnPersonT').classList.add('selected');
+document.getElementById('btnPersonC').classList.remove('selected');
+});
+document.getElementById('addPurchaseBtn').addEventListener('click', function () {
+const itemEl = document.getElementById('purchaseItem');
+const priceEl = document.getElementById('purchasePrice');
+const item = itemEl.value.trim();
+const price = Number(priceEl.value);
+if (!item || !(price > 0)) return;
+const entry = { id: genId(), item: item, price: price, person: selectedPerson };
+const months = state.months.slice();
+const idx = months.length - 1;
+months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).concat([entry]) });
+saveState(Object.assign({}, state, { months: months }));
+itemEl.value = ''; priceEl.value = ''; itemEl.focus();
+});
+function delPurchase(id) {
+const months = state.months.slice();
+const idx = months.length - 1;
+months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).filter(function (p) { return p.id !== id; }) });
+saveState(Object.assign({}, state, { months: months }));
+}
+document.getElementById('purchasesListC').addEventListener('click', function (e) {
+const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
+});
+document.getElementById('purchasesListT').addEventListener('click', function (e) {
+const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
+});
+document.getElementById('resetPurchases').addEventListener('click', function () {
+askConfirm('Clear all purchases this month?', function () { updateCurrentMonth({ purchases: [] }); });
+});
 
-  // ---- semi-recurring expenses ----
-  document.getElementById('addSemiBtn').addEventListener('click', function () {
-    const nameEl = document.getElementById('semiName');
-    const name = nameEl.value.trim();
-    if (!name) return;
-    const entry = { id: genId(), name: name };
-    saveState(Object.assign({}, state, { semiRecurring: (state.semiRecurring || []).concat([entry]) }));
-    nameEl.value = ''; nameEl.focus();
-  });
+// ---- semi-recurring expenses ----
+document.getElementById('addSemiBtn').addEventListener('click', function () {
+const nameEl = document.getElementById('semiName');
+const name = nameEl.value.trim();
+if (!name) return;
+const entry = { id: genId(), name: name };
+saveState(Object.assign({}, state, { semiRecurring: (state.semiRecurring || []).concat([entry]) }));
+nameEl.value = ''; nameEl.focus();
+});
 
-  document.getElementById('semiUnlockBtn').addEventListener('click', function () {
-    const mo = state.months[viewingIndex];
-    askConfirm('This month is closed. Are you sure you want to edit its semi-recurring purchases?', function () {
-      unlockedMonths.add(mo.key);
-      render();
-    });
-  });
+document.getElementById('semiUnlockBtn').addEventListener('click', function () {
+const mo = state.months[viewingIndex];
+askConfirm('This month is closed. Are you sure you want to edit its semi-recurring purchases?', function () {
+unlockedMonths.add(mo.key);
+render();
+});
+});
 
-  function addSemiEntry(semiId, person, amount) {
-    const idx = viewingIndex;
-    const mo = state.months[idx];
-    const entry = { id: genId(), semiId: semiId, person: person, amount: amount };
-    updateMonthAt(idx, { semiEntries: (mo.semiEntries || []).concat([entry]) });
-  }
-  function delSemiEntry(monthIdx, entryId) {
-    const mo = state.months[monthIdx];
-    updateMonthAt(monthIdx, { semiEntries: (mo.semiEntries || []).filter(function (e) { return e.id !== entryId; }) });
-  }
+function addSemiEntry(semiId, person, amount) {
+const idx = viewingIndex;
+const mo = state.months[idx];
+const entry = { id: genId(), semiId: semiId, person: person, amount: amount };
+updateMonthAt(idx, { semiEntries: (mo.semiEntries || []).concat([entry]) });
+}
+function delSemiEntry(monthIdx, entryId) {
+const mo = state.months[monthIdx];
+updateMonthAt(monthIdx, { semiEntries: (mo.semiEntries || []).filter(function (e) { return e.id !== entryId; }) });
+}
 
-  function openSemiDetail(semiId) {
-    const idx = viewingIndex;
-    const mo = state.months[idx];
-    const type = (state.semiRecurring || []).find(function (s) { return s.id === semiId; });
-    if (!type) return;
-    const label = MONTHS[mo.monthIndex] + ' ' + mo.year;
-    document.getElementById('semiDetailTitle').textContent = type.name + ' — ' + label;
-    const overlay = document.getElementById('semiDetailOverlay');
-    overlay.dataset.monthIdx = String(idx);
-    overlay.dataset.semiId = semiId;
-    renderSemiDetailList();
-    overlay.classList.add('open');
-  }
-  function renderSemiDetailList() {
-    const overlay = document.getElementById('semiDetailOverlay');
-    const monthIdx = Number(overlay.dataset.monthIdx);
-    const semiId = overlay.dataset.semiId;
-    const mo = state.months[monthIdx];
-    if (!mo) return;
-    const monthUnlocked = monthIdx === state.months.length - 1 || unlockedMonths.has(mo.key);
-    const entries = (mo.semiEntries || []).filter(function (e) { return e.semiId === semiId; });
-    const listEl = document.getElementById('semiDetailList');
-    if (entries.length === 0) {
-      listEl.innerHTML = '<li class="semi-detail-empty">No purchases recorded yet.</li>';
-    } else {
-      listEl.innerHTML = entries.map(function (e) {
-        return '<li><span class="init ' + e.person.toLowerCase() + '">' + e.person + '</span>' +
-          '<span class="entry-name">' + fmt(e.amount) + '</span>' +
-          (monthUnlocked ? '<button class="del-btn" data-del-semi-entry="' + e.id + '">✕</button>' : '') + '</li>';
-      }).join('');
-    }
-  }
-  document.getElementById('semiDetailCloseBtn').addEventListener('click', function () {
-    document.getElementById('semiDetailOverlay').classList.remove('open');
-  });
-  document.getElementById('semiDetailList').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-semi-entry]');
-    if (!b) return;
-    const overlay = document.getElementById('semiDetailOverlay');
-    const monthIdx = Number(overlay.dataset.monthIdx);
-    delSemiEntry(monthIdx, b.getAttribute('data-del-semi-entry'));
-    renderSemiDetailList();
-  });
+function openSemiDetail(semiId) {
+const idx = viewingIndex;
+const mo = state.months[idx];
+const type = (state.semiRecurring || []).find(function (s) { return s.id === semiId; });
+if (!type) return;
+const label = MONTHS[mo.monthIndex] + ' ' + mo.year;
+document.getElementById('semiDetailTitle').textContent = type.name + ' — ' + label;
+const overlay = document.getElementById('semiDetailOverlay');
+overlay.dataset.monthIdx = String(idx);
+overlay.dataset.semiId = semiId;
+renderSemiDetailList();
+overlay.classList.add('open');
+}
+function renderSemiDetailList() {
+const overlay = document.getElementById('semiDetailOverlay');
+const monthIdx = Number(overlay.dataset.monthIdx);
+const semiId = overlay.dataset.semiId;
+const mo = state.months[monthIdx];
+if (!mo) return;
+const monthUnlocked = monthIdx === state.months.length - 1 || unlockedMonths.has(mo.key);
+const entries = (mo.semiEntries || []).filter(function (e) { return e.semiId === semiId; });
+const listEl = document.getElementById('semiDetailList');
+if (entries.length === 0) {
+listEl.innerHTML = '<li class="semi-detail-empty">No purchases recorded yet.</li>';
+} else {
+listEl.innerHTML = entries.map(function (e) {
+return '<li><span class="init ' + e.person.toLowerCase() + '">' + e.person + '</span>' +
+'<span class="entry-name">' + fmt(e.amount) + '</span>' +
+(monthUnlocked ? '<button class="del-btn" data-del-semi-entry="' + e.id + '">✕</button>' : '') + '</li>';
+}).join('');
+}
+}
+document.getElementById('semiDetailCloseBtn').addEventListener('click', function () {
+document.getElementById('semiDetailOverlay').classList.remove('open');
+});
+document.getElementById('semiDetailList').addEventListener('click', function (e) {
+const b = e.target.closest('[data-del-semi-entry]');
+if (!b) return;
+const overlay = document.getElementById('semiDetailOverlay');
+const monthIdx = Number(overlay.dataset.monthIdx);
+delSemiEntry(monthIdx, b.getAttribute('data-del-semi-entry'));
+renderSemiDetailList();
+});
 
-  document.getElementById('semiList').addEventListener('click', function (e) {
-    const delBtn = e.target.closest('[data-del-semi]');
-    if (delBtn) {
-      const id = delBtn.getAttribute('data-del-semi');
-      askConfirm('Remove this expense type? Its recorded purchases in every month will also be removed.', function () {
-        const months = state.months.map(function (mo) {
-          return Object.assign({}, mo, { semiEntries: (mo.semiEntries || []).filter(function (en) { return en.semiId !== id; }) });
-        });
-        saveState(Object.assign({}, state, {
-          semiRecurring: (state.semiRecurring || []).filter(function (s) { return s.id !== id; }),
-          months: months
-        }));
-      });
-      return;
-    }
-    const addBtn = e.target.closest('[data-semi-add]');
-    if (addBtn) {
-      if (addBtn.disabled) return;
-      const id = addBtn.getAttribute('data-semi-add');
-      const person = addBtn.getAttribute('data-semi-person');
-      const input = document.querySelector('[data-semi-input="' + id + '"][data-semi-person="' + person + '"]');
-      const amount = Number(input.value);
-      if (!(amount > 0)) return;
-      addSemiEntry(id, person, amount);
-      return;
-    }
-    const viewBtn = e.target.closest('[data-view-semi]');
-    if (viewBtn) { openSemiDetail(viewBtn.getAttribute('data-view-semi')); return; }
-  });
-  // Enter key in a semi amount input also logs the entry.
-  document.getElementById('semiList').addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    const input = e.target.closest('[data-semi-input]');
-    if (!input || input.disabled) return;
-    const id = input.getAttribute('data-semi-input');
-    const person = input.getAttribute('data-semi-person');
-    const amount = Number(input.value);
-    if (!(amount > 0)) return;
-    addSemiEntry(id, person, amount);
-  });
+document.getElementById('semiList').addEventListener('click', function (e) {
+const delBtn = e.target.closest('[data-del-semi]');
+if (delBtn) {
+const id = delBtn.getAttribute('data-del-semi');
+askConfirm('Remove this expense type? Its recorded purchases in every month will also be removed.', function () {
+const months = state.months.map(function (mo) {
+return Object.assign({}, mo, { semiEntries: (mo.semiEntries || []).filter(function (en) { return en.semiId !== id; }) });
+});
+saveState(Object.assign({}, state, {
+semiRecurring: (state.semiRecurring || []).filter(function (s) { return s.id !== id; }),
+months: months
+}));
+});
+return;
+}
+const addBtn = e.target.closest('[data-semi-add]');
+if (addBtn) {
+if (addBtn.disabled) return;
+const id = addBtn.getAttribute('data-semi-add');
+const person = addBtn.getAttribute('data-semi-person');
+const input = document.querySelector('[data-semi-input="' + id + '"][data-semi-person="' + person + '"]');
+const amount = Number(input.value);
+if (!(amount > 0)) return;
+addSemiEntry(id, person, amount);
+return;
+}
+const viewBtn = e.target.closest('[data-view-semi]');
+if (viewBtn) { openSemiDetail(viewBtn.getAttribute('data-view-semi')); return; }
+});
+// Enter key in a semi amount input also logs the entry.
+document.getElementById('semiList').addEventListener('keydown', function (e) {
+if (e.key !== 'Enter') return;
+const input = e.target.closest('[data-semi-input]');
+if (!input || input.disabled) return;
+const id = input.getAttribute('data-semi-input');
+const person = input.getAttribute('data-semi-person');
+const amount = Number(input.value);
+if (!(amount > 0)) return;
+addSemiEntry(id, person, amount);
+});
 
-  document.getElementById('addRecurringBtn').addEventListener('click', function () {
-    const nameEl = document.getElementById('recurringName');
-    const amtEl = document.getElementById('recurringAmount');
-    const name = nameEl.value.trim();
-    const amount = Number(amtEl.value);
-    if (!name || !(amount > 0)) return;
-    const entry = { id: genId(), name: name, amount: amount };
-    saveState(Object.assign({}, state, { recurring: (state.recurring || []).concat([entry]) }));
-    nameEl.value = ''; amtEl.value = ''; nameEl.focus();
-  });
-  document.getElementById('recurringList').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-recurring]');
-    if (!b) return;
-    const id = b.getAttribute('data-del-recurring');
-    saveState(Object.assign({}, state, { recurring: (state.recurring || []).filter(function (r) { return r.id !== id; }) }));
-  });
-  document.getElementById('resetRecurring').addEventListener('click', function () {
-    askConfirm('Remove all recurring expenses?', function () {
-      saveState(Object.assign({}, state, { recurring: [] }));
-    });
-  });
+document.getElementById('addRecurringBtn').addEventListener('click', function () {
+const nameEl = document.getElementById('recurringName');
+const amtEl = document.getElementById('recurringAmount');
+const name = nameEl.value.trim();
+const amount = Number(amtEl.value);
+if (!name || !(amount > 0)) return;
+const entry = { id: genId(), name: name, amount: amount };
+saveState(Object.assign({}, state, { recurring: (state.recurring || []).concat([entry]) }));
+nameEl.value = ''; amtEl.value = ''; nameEl.focus();
+});
+document.getElementById('recurringList').addEventListener('click', function (e) {
+const b = e.target.closest('[data-del-recurring]');
+if (!b) return;
+const id = b.getAttribute('data-del-recurring');
+saveState(Object.assign({}, state, { recurring: (state.recurring || []).filter(function (r) { return r.id !== id; }) }));
+});
+document.getElementById('resetRecurring').addEventListener('click', function () {
+askConfirm('Remove all recurring expenses?', function () {
+saveState(Object.assign({}, state, { recurring: [] }));
+});
+});
 
-  document.getElementById('nextMonthBtn').addEventListener('click', function () {
-    const months = state.months;
-    const cur = months[months.length - 1];
-    const nextIdx = (cur.monthIndex + 1) % 12;
-    const nextYear = cur.year + (nextIdx === 0 ? 1 : 0);
-    const nextLabel = MONTHS[nextIdx] + ' ' + nextYear;
-    askConfirm('Move to ' + nextLabel + '? This month will close and a fresh month starts — you\'ll set your own carry-over amount. Semi-recurring expense types carry over automatically, but last month\'s amounts do not.', function () {
-      const newMonths = months.concat([freshMonth(nextIdx, nextYear)]);
-      viewingIndex = newMonths.length - 1;
-      wasAtLatest = true;
-      saveState(Object.assign({}, state, { months: newMonths }));
-    });
-  });
+document.getElementById('nextMonthBtn').addEventListener('click', function () {
+const months = state.months;
+const cur = months[months.length - 1];
+const nextIdx = (cur.monthIndex + 1) % 12;
+const nextYear = cur.year + (nextIdx === 0 ? 1 : 0);
+const nextLabel = MONTHS[nextIdx] + ' ' + nextYear;
+askConfirm('Move to ' + nextLabel + '? This month will close and a fresh month starts — you\'ll set your own carry-over amount. Semi-recurring expense types carry over automatically, but last month\'s amounts do not.', function () {
+const newMonths = months.concat([freshMonth(nextIdx, nextYear)]);
+viewingIndex = newMonths.length - 1;
+wasAtLatest = true;
+saveState(Object.assign({}, state, { months: newMonths }));
+});
+});
 
-  // ---- init / sync ----
-  async function init() {
-    try {
-      await signInAnonymously(firebaseAuth);
-      docRef = doc(firestore, 'budget', 'state');
-      usingDb = true;
-      onSnapshot(docRef, function (snap) {
-        if (snap.exists()) {
-          applyIncoming(snap.data());
-          setStatus('Synced with your household.');
-          render();
-        } else {
-          setDoc(docRef, defaultState()).catch(function () {});
-        }
-      }, function () {
-        usingDb = false; loadLocal();
-        setStatus('Working offline on this device — changes will not sync.');
-        render();
-      });
-    } catch (e) {
-      usingDb = false;
-      loadLocal();
-      setStatus('Working offline on this device — changes will not sync.');
-      render();
-    }
-  }
+// ---- auth ----
+function showAuthOverlay(message) {
+document.getElementById('authOverlay').classList.add('open');
+if (message) {
+const errEl = document.getElementById('authError');
+errEl.textContent = message;
+errEl.style.display = 'block';
+}
+}
+function hideAuthOverlay() {
+document.getElementById('authOverlay').classList.remove('open');
+}
+document.getElementById('googleSignInBtn').addEventListener('click', function () {
+document.getElementById('authError').style.display = 'none';
+signInWithRedirect(firebaseAuth, googleProvider);
+});
 
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').catch(function () {});
-    });
-  }
+// ---- init / sync ----
+function startFirestoreSync() {
+if (usingDb) return;
+docRef = doc(firestore, 'budget', 'state');
+usingDb = true;
+onSnapshot(docRef, function (snap) {
+if (snap.exists()) {
+applyIncoming(snap.data());
+setStatus('Synced with your household.');
+render();
+} else {
+setDoc(docRef, defaultState()).catch(function () {});
+}
+}, function () {
+usingDb = false; loadLocal();
+setStatus('Working offline on this device — changes will not sync.');
+render();
+});
+}
 
-  render();
-  init();
+async function init() {
+try {
+await getRedirectResult(firebaseAuth);
+} catch (e) {
+showAuthOverlay('Sign-in failed — please try again.');
+}
+onAuthStateChanged(firebaseAuth, function (user) {
+if (user && ALLOWED_EMAILS.indexOf(user.email) !== -1) {
+hideAuthOverlay();
+startFirestoreSync();
+} else if (user) {
+showAuthOverlay('This Google account is not authorized for this household budget.');
+signOut(firebaseAuth);
+} else {
+showAuthOverlay();
+}
+});
+}
+
+if ('serviceWorker' in navigator) {
+window.addEventListener('load', function () {
+navigator.serviceWorker.register('sw.js').catch(function () {});
+});
+}
+
+render();
+init();
 })();
 </script>
 </body>
