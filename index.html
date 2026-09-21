@@ -596,8 +596,14 @@ function isStandaloneApp() {
 return window.navigator.standalone === true ||
 (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 }
+// Fixed on purpose (not derived from the current URL): the standalone app's
+// start_url is index.html, but a regular browser visit is usually just the
+// folder URL — those are two different paths, and Google's OAuth redirect_uri
+// must match one exact, pre-registered value. Pinning it avoids that mismatch
+// regardless of which URL the page happened to load from.
+const MANUAL_REDIRECT_URI = 'https://shaloshwood.github.io/household-budget/';
 function startManualGoogleSignIn() {
-const redirectUri = window.location.origin + window.location.pathname;
+const redirectUri = MANUAL_REDIRECT_URI;
 const params = new URLSearchParams({
 client_id: GOOGLE_OAUTH_CLIENT_ID,
 redirect_uri: redirectUri,
