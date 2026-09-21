@@ -564,7 +564,7 @@ Sign in with Google
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInWithCredential, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ---- Fill this in with your own Firebase project's config ----
 // Firebase console → Project settings → General → "Your apps" → SDK setup and configuration
@@ -584,6 +584,43 @@ const firebaseAuth = getAuth(firebaseApp);
 // Matching Firestore rule must be published for this to actually be enforced server-side.
 const ALLOWED_EMAILS = ["shalosh.wood@gmail.com", "levy.tanya7@gmail.com"];
 const googleProvider = new GoogleAuthProvider();
+
+// iOS "Add to Home Screen" apps run in an isolated WebKit context where neither
+// signInWithPopup nor Firebase's own signInWithRedirect can reliably complete
+// (the OS hands the mid-flow navigation off to Safari and the standalone app
+// never sees the result). So for standalone/home-screen mode we drive Google's
+// OAuth implicit flow directly with a single hop that lands back on this exact
+// page, then hand the returned id_token to Firebase ourselves.
+const GOOGLE_OAUTH_CLIENT_ID = "151940354445-6l8cf5v6mdn6686ff317h6lp0v9o3pj5.apps.googleusercontent.com";
+function isStandaloneApp() {
+return window.navigator.standalone === true ||
+(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
+function startManualGoogleSignIn() {
+const redirectUri = window.location.origin + window.location.pathname;
+const params = new URLSearchParams({
+client_id: GOOGLE_OAUTH_CLIENT_ID,
+redirect_uri: redirectUri,
+response_type: 'id_token',
+scope: 'openid email profile',
+prompt: 'select_account',
+nonce: Date.now().toString(36) + Math.random().toString(36).slice(2)
+});
+window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+async function handleManualGoogleReturn() {
+if (!location.hash) return false;
+const params = new URLSearchParams(location.hash.slice(1));
+const idToken = params.get('id_token');
+if (!idToken) return false;
+history.replaceState(null, '', location.pathname + location.search);
+try {
+await signInWithCredential(firebaseAuth, GoogleAuthProvider.credential(idToken));
+} catch (e) {
+showAuthOverlay('Sign-in failed — please try again.');
+}
+return true;
+}
 
 (function () {
 const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -1044,9 +1081,13 @@ document.getElementById('authOverlay').classList.remove('open');
 }
 document.getElementById('googleSignInBtn').addEventListener('click', function () {
 document.getElementById('authError').style.display = 'none';
+if (isStandaloneApp()) {
+startManualGoogleSignIn();
+return;
+}
 signInWithPopup(firebaseAuth, googleProvider).catch(function (e) {
 if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
-// Popup didn't work in this browser (common in standalone/home-screen apps) — fall back to redirect.
+// Popup didn't work in this browser — fall back to redirect.
 signInWithRedirect(firebaseAuth, googleProvider);
 } else if (e && (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request')) {
 // User closed the sign-in popup — no error needed.
@@ -1077,10 +1118,13 @@ render();
 }
 
 async function init() {
+const handledManually = await handleManualGoogleReturn();
+if (!handledManually) {
 try {
 await getRedirectResult(firebaseAuth);
 } catch (e) {
 showAuthOverlay('Sign-in failed — please try again.');
+}
 }
 onAuthStateChanged(firebaseAuth, function (user) {
 if (user && ALLOWED_EMAILS.indexOf(user.email) !== -1) {
