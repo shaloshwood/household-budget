@@ -311,15 +311,15 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 .icon-btn:hover { color: var(--primary-dark); }
 .icon-btn svg { display: block; }
 .semi-input-row { display: flex; align-items: center; gap: 8px; background: var(--surface); border-radius: 12px; padding: 4px 6px; }
-.semi-input-row input { width: 64px; flex: 0 0 64px; padding: 7px 8px; font-size: 13px; border-radius: 10px; }
+.semi-input-row input { width: auto; flex: 1 1 auto; min-width: 0; padding: 7px 8px; font-size: 13px; border-radius: 10px; }
 .semi-input-row button {
   flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; border: none;
   background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 15px; cursor: pointer;
   font-family: 'Quicksand', sans-serif; line-height: 1;
 }
 .semi-input-row button:disabled { opacity: 0.35; cursor: default; }
-.semi-input-row .icon-btn { margin-left: 2px; }
-.semi-input-row strong { margin-left: auto; }
+.semi-input-row .icon-btn { margin-left: 2px; flex-shrink: 0; }
+.semi-input-row strong { flex-shrink: 0; white-space: nowrap; }
 .semi-total-line { margin-top: 12px; font-size: 12.5px; color: var(--ink-soft); }
 .semi-total-line strong { color: var(--ink); }
 .semi-detail-box { max-width: 340px; }
