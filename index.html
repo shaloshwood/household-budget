@@ -298,11 +298,13 @@ li.editing-row { gap: 6px; }
   padding: 4px 8px; cursor: pointer; flex-shrink: 0;
 }
 ul.semi-list { list-style: none; margin: 0; padding: 0; }
-ul.semi-list li.semi-row { padding: 10px 0; border-bottom: 1px solid var(--line); }
+ul.semi-list li.semi-row {
+  display: flex; align-items: center; gap: 6px; padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
 ul.semi-list li.semi-row:last-child { border-bottom: none; }
-.semi-row-head { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
-.semi-row-head .entry-name { font-weight: 700; font-size: 13px; flex: 1; }
-.semi-row-head strong, .semi-input-row strong { font-size: 12.5px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
+ul.semi-list .entry-name { font-weight: 700; font-size: 13px; }
+ul.semi-list li.semi-row strong { font-size: 12px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; flex-shrink: 0; white-space: nowrap; }
 .icon-btn {
   border: none; background: none; color: var(--ink-soft); cursor: pointer;
   padding: 3px 4px; line-height: 1;
@@ -310,16 +312,17 @@ ul.semi-list li.semi-row:last-child { border-bottom: none; }
 }
 .icon-btn:hover { color: var(--primary-dark); }
 .icon-btn svg { display: block; }
-.semi-input-row { display: flex; align-items: center; gap: 8px; background: var(--surface); border-radius: 12px; padding: 4px 6px; }
-.semi-input-row input { width: auto; flex: 1 1 auto; min-width: 0; padding: 7px 8px; font-size: 13px; border-radius: 10px; }
-.semi-input-row button {
-  flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px; border: none;
-  background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 15px; cursor: pointer;
+input.semi-amount-input {
+  width: 48px; flex: 0 1 48px; min-width: 0;
+  padding: 6px 7px; font-size: 13px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--line);
+}
+.semi-add-btn {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; border: none;
+  background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 14px; cursor: pointer;
   font-family: 'Quicksand', sans-serif; line-height: 1;
 }
-.semi-input-row button:disabled { opacity: 0.35; cursor: default; }
-.semi-input-row .icon-btn { margin-left: 2px; flex-shrink: 0; }
-.semi-input-row strong { flex-shrink: 0; white-space: nowrap; }
+.semi-add-btn:disabled { opacity: 0.35; cursor: default; }
 .semi-total-line { margin-top: 12px; font-size: 12.5px; color: var(--ink-soft); }
 .semi-total-line strong { color: var(--ink); }
 .semi-detail-box { max-width: 340px; }
@@ -837,17 +840,13 @@ async function handleManualGoogleReturn() {
       semiListEl.innerHTML = types.map(function (s) {
         const total = semiTypeTotal(m, s.id);
         return '<li class="semi-row" data-semi-id="' + s.id + '">' +
-          '<div class="semi-row-head">' +
-            '<span class="drag-handle" title="Drag to reorder">' + GRIP_SVG + '</span>' +
-            '<span class="entry-name">' + escapeHtml(s.name) + '</span>' +
-            '<button class="del-btn" data-del-semi="' + s.id + '" title="Remove expense type">✕</button>' +
-          '</div>' +
-          '<div class="semi-input-row">' +
-            '<input type="number" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" ' + disabledAttr + '>' +
-            '<button data-semi-add="' + s.id + '" ' + disabledAttr + '>+</button>' +
-            '<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">' + EYE_SVG + '</button>' +
-            '<strong>' + fmt(total) + '</strong>' +
-          '</div>' +
+          '<span class="drag-handle" title="Drag to reorder">' + GRIP_SVG + '</span>' +
+          '<span class="entry-name">' + escapeHtml(s.name) + '</span>' +
+          '<input type="number" class="semi-amount-input" inputmode="decimal" placeholder="0" min="0" data-semi-input="' + s.id + '" ' + disabledAttr + '>' +
+          '<button class="semi-add-btn" data-semi-add="' + s.id + '" ' + disabledAttr + '>+</button>' +
+          '<button class="icon-btn" data-view-semi="' + s.id + '" title="View purchases">' + EYE_SVG + '</button>' +
+          '<strong>' + fmt(total) + '</strong>' +
+          '<button class="del-btn" data-del-semi="' + s.id + '" title="Remove expense type">✕</button>' +
         '</li>';
       }).join('');
     }
