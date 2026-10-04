@@ -366,6 +366,17 @@ footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); mar
 }
 .confirm-cancel { background: var(--surface-2); color: var(--ink-soft); }
 .confirm-ok { background: var(--primary); color: #FBF9EE; border-color: var(--primary); }
+
+#authOverlay { z-index: 200; }
+#authOverlay .confirm-box { text-align: center; }
+.google-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 12px 0; border-radius: 14px; border: 1px solid var(--line);
+  background: var(--surface-2); color: var(--ink); font-weight: 800; font-size: 14px; cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+}
+.google-btn:active { opacity: 0.85; }
+#authError { color: var(--danger); font-size: 12.5px; margin-top: 14px; display: none; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -553,15 +564,26 @@ Move to October
 </div>
 </div>
 
+<div class="confirm-overlay open" id="authOverlay">
+<div class="confirm-box">
+<p>Sign in to sync your household budget.</p>
+<button class="google-btn" id="googleSignInBtn">
+<svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.9c1.7-1.57 2.7-3.88 2.7-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.9-2.26c-.8.54-1.84.86-3.06.86-2.35 0-4.34-1.59-5.05-3.72H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.95 10.7A5.4 5.4 0 0 1 3.67 9c0-.59.1-1.17.28-1.7V4.97H.96A9 9 0 0 0 0 9c0 1.45.35 2.83.96 4.03l2.99-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.97l2.99 2.33C4.66 5.17 6.65 3.58 9 3.58z"/></svg>
+Sign in with Google
+</button>
+<p id="authError"></p>
+</div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, signInWithCredential, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 // ---- Fill this in with your own Firebase project's config ----
 // Firebase console → Project settings → General → "Your apps" → SDK setup and configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAvAlYMtRjtSoTEEiqKJMmJzbotxn4PPHY",
+  apiKey: "AIzaSyBCph7IyyPhKzB5bb1J5nnfHZQ1Xy_bvQs",
   authDomain: "household-budget-14e74.firebaseapp.com",
   projectId: "household-budget-14e74",
   storageBucket: "household-budget-14e74.firebasestorage.app",
@@ -571,6 +593,54 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
+
+// Only these two Google accounts may read/write this household's data.
+// Matching Firestore rule must be published for this to actually be enforced server-side.
+const ALLOWED_EMAILS = ["costikklim@gmail.com", "levy.tanya7@gmail.com"];
+const googleProvider = new GoogleAuthProvider();
+
+// iOS "Add to Home Screen" apps run in an isolated WebKit context where neither
+// signInWithPopup nor Firebase's own signInWithRedirect can reliably complete
+// (the OS hands the mid-flow navigation off to Safari and the standalone app
+// never sees the result). So for standalone/home-screen mode we drive Google's
+// OAuth implicit flow directly with a single hop that lands back on this exact
+// page, then hand the returned id_token to Firebase ourselves.
+const GOOGLE_OAUTH_CLIENT_ID = "151940354445-6l8cf5v6mdn6686ff317h6lp0v9o3pj5.apps.googleusercontent.com";
+function isStandaloneApp() {
+  return window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
+// Fixed on purpose (not derived from the current URL): the standalone app's
+// start_url is index.html, but a regular browser visit is usually just the
+// folder URL — those are two different paths, and Google's OAuth redirect_uri
+// must match one exact, pre-registered value. Pinning it avoids that mismatch
+// regardless of which URL the page happened to load from.
+const MANUAL_REDIRECT_URI = 'https://shaloshwood.github.io/household-budget/';
+function startManualGoogleSignIn() {
+  const redirectUri = MANUAL_REDIRECT_URI;
+  const params = new URLSearchParams({
+    client_id: GOOGLE_OAUTH_CLIENT_ID,
+    redirect_uri: redirectUri,
+    response_type: 'id_token',
+    scope: 'openid email profile',
+    prompt: 'select_account',
+    nonce: Date.now().toString(36) + Math.random().toString(36).slice(2)
+  });
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+async function handleManualGoogleReturn() {
+  if (!location.hash) return false;
+  const params = new URLSearchParams(location.hash.slice(1));
+  const idToken = params.get('id_token');
+  if (!idToken) return false;
+  history.replaceState(null, '', location.pathname + location.search);
+  try {
+    await signInWithCredential(firebaseAuth, GoogleAuthProvider.credential(idToken));
+  } catch (e) {
+    showAuthOverlay('Sign-in failed — please try again.');
+  }
+  return true;
+}
 
 (function () {
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -1138,31 +1208,75 @@ const firebaseAuth = getAuth(firebaseApp);
   makeSortable(document.getElementById('semiList'), 'li[data-semi-id]', 'data-semi-id', reorderSemi);
   makeSortable(document.getElementById('recurringList'), 'li[data-recurring-id]', 'data-recurring-id', reorderRecurring);
 
+  // ---- auth ----
+  function showAuthOverlay(message) {
+    document.getElementById('authOverlay').classList.add('open');
+    if (message) {
+      const errEl = document.getElementById('authError');
+      errEl.textContent = message;
+      errEl.style.display = 'block';
+    }
+  }
+  function hideAuthOverlay() {
+    document.getElementById('authOverlay').classList.remove('open');
+  }
+  document.getElementById('googleSignInBtn').addEventListener('click', function () {
+    document.getElementById('authError').style.display = 'none';
+    if (isStandaloneApp()) {
+      startManualGoogleSignIn();
+      return;
+    }
+    signInWithPopup(firebaseAuth, googleProvider).catch(function (e) {
+      if (e && (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment')) {
+        signInWithRedirect(firebaseAuth, googleProvider);
+      } else if (e && (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request')) {
+        // no error needed
+      } else {
+        showAuthOverlay('Sign-in failed — please try again.');
+      }
+    });
+  });
+
   // ---- init / sync ----
-  async function init() {
-    try {
-      await signInAnonymously(firebaseAuth);
-      docRef = doc(firestore, 'budget', 'state');
-      usingDb = true;
-      onSnapshot(docRef, function (snap) {
-        if (snap.exists()) {
-          applyIncoming(snap.data());
-          setStatus('Synced with your household.');
-          render();
-        } else {
-          setDoc(docRef, defaultState()).catch(function () {});
-        }
-      }, function () {
-        usingDb = false; loadLocal();
-        setStatus('Working offline on this device — changes will not sync.');
+  function startFirestoreSync() {
+    if (usingDb) return;
+    docRef = doc(firestore, 'budget', 'state');
+    usingDb = true;
+    onSnapshot(docRef, function (snap) {
+      if (snap.exists()) {
+        applyIncoming(snap.data());
+        setStatus('Synced with your household.');
         render();
-      });
-    } catch (e) {
-      usingDb = false;
-      loadLocal();
+      } else {
+        setDoc(docRef, defaultState()).catch(function () {});
+      }
+    }, function () {
+      usingDb = false; loadLocal();
       setStatus('Working offline on this device — changes will not sync.');
       render();
+    });
+  }
+
+  async function init() {
+    const handledManually = await handleManualGoogleReturn();
+    if (!handledManually) {
+      try {
+        await getRedirectResult(firebaseAuth);
+      } catch (e) {
+        showAuthOverlay('Sign-in failed — please try again.');
+      }
     }
+    onAuthStateChanged(firebaseAuth, function (user) {
+      if (user && ALLOWED_EMAILS.indexOf(user.email) !== -1) {
+        hideAuthOverlay();
+        startFirestoreSync();
+      } else if (user) {
+        showAuthOverlay('This Google account is not authorized for this household budget.');
+        signOut(firebaseAuth);
+      } else {
+        showAuthOverlay();
+      }
+    });
   }
 
   if ('serviceWorker' in navigator) {
