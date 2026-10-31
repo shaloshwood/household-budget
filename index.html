@@ -244,25 +244,39 @@ input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
 .btn-primary:active:not(:disabled) { opacity: 0.85; }
 .btn-small { width: auto; padding: 10px 16px; flex-shrink: 0; }
 
-.purchase-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
-.p-col { background: var(--surface-2); border-radius: 16px 16px 16px 6px; padding: 10px 10px 12px; }
+.purchase-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-top: 14px; }
+.p-col { background: var(--surface-2); border-radius: 16px 16px 16px 6px; padding: 10px 10px 12px; min-width: 0; }
 .col-head {
   display: flex; align-items: center; justify-content: space-between;
   font-size: 12.5px; font-weight: 700; color: var(--ink-soft); margin-bottom: 6px;
 }
 .col-head strong { color: var(--ink); }
 .col-head .init { width: 26px; height: 26px; font-size: 13px; margin-right: 0; }
+.purchase-totals-row {
+  display: flex; align-items: center; gap: 16px; font-size: 12.5px; font-weight: 700;
+  color: var(--ink-soft); margin: 14px 0 10px;
+}
+.purchase-totals-row strong { color: var(--ink); font-weight: 800; }
+ul.purchase-list .init { margin-right: 6px; }
 ul.entry-list { list-style: none; margin: 0; padding: 0; }
 ul.entry-list li {
   display: flex; align-items: center; gap: 6px; padding: 7px 0;
   border-bottom: 1px solid var(--line); font-size: 12.5px;
 }
 ul.entry-list li:last-child { border-bottom: none; }
-.entry-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.entry-price { color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 12px; }
-.del-btn { border: none; background: none; color: var(--ink-soft); font-size: 13px; cursor: pointer; padding: 2px 2px; line-height: 1; }
+.entry-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.entry-date { flex-shrink: 0; font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; width: 32px; text-align: center; }
+.entry-price { flex-shrink: 0; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-size: 12px; }
+.del-btn { flex-shrink: 0; border: none; background: none; color: var(--ink-soft); font-size: 13px; cursor: pointer; padding: 2px 2px; line-height: 1; }
 .del-btn:hover { color: var(--danger); }
 .empty-note { font-size: 11.5px; color: var(--ink-soft); font-style: italic; padding: 4px 0; }
+.show-more-row { list-style: none; border-bottom: none !important; padding: 6px 0 0 !important; }
+.show-more-btn {
+  width: 100%; text-align: center; background: none; border: 1px dashed var(--line); border-radius: 10px;
+  padding: 6px 0; font-size: 11.5px; font-weight: 700; color: var(--primary-dark); cursor: pointer;
+  font-family: 'Quicksand', sans-serif;
+}
+.show-more-btn:hover { background: var(--surface-2); }
 
 /* Drag-to-reorder handle, shared by every reorderable list */
 .drag-handle {
@@ -303,8 +317,12 @@ ul.semi-list li.semi-row {
   border-bottom: 1px solid var(--line);
 }
 ul.semi-list li.semi-row:last-child { border-bottom: none; }
-ul.semi-list .entry-name { font-weight: 700; font-size: 13px; }
-ul.semi-list li.semi-row strong { font-size: 12px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; flex-shrink: 0; white-space: nowrap; }
+ul.semi-list .entry-name { font-weight: 700; font-size: 13px; cursor: default; }
+ul.semi-list li.semi-row strong {
+  font-size: 12px; color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums;
+  flex-shrink: 0; white-space: nowrap; width: 50px; text-align: right;
+}
+ul.semi-list li.semi-row .del-btn { flex-shrink: 0; width: 16px; text-align: center; }
 .icon-btn {
   border: none; background: none; color: var(--ink-soft); cursor: pointer;
   padding: 3px 4px; line-height: 1;
@@ -313,10 +331,13 @@ ul.semi-list li.semi-row strong { font-size: 12px; color: var(--ink-soft); font-
 .icon-btn:hover { color: var(--primary-dark); }
 .icon-btn svg { display: block; }
 input.semi-amount-input {
-  width: 48px; flex: 0 1 48px; min-width: 0;
+  width: 58px; flex: 0 0 58px; min-width: 0; box-sizing: border-box;
   padding: 6px 7px; font-size: 13px; border-radius: 10px;
   background: var(--surface); border: 1px solid var(--line);
+  -moz-appearance: textfield;
 }
+input.semi-amount-input::-webkit-outer-spin-button,
+input.semi-amount-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .semi-add-btn {
   flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; border: none;
   background: var(--primary); color: #FBF9EE; font-weight: 800; font-size: 14px; cursor: pointer;
@@ -432,6 +453,7 @@ footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); mar
 <h2>
 <svg class="leaf-ic" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 14C8 14 3 11 3 6C3 6 8 2 8 2C8 2 13 6 13 6C13 11 8 14 8 14Z" fill="var(--accent)"/></svg>
 <span class="title-text">Purchases</span>
+<button class="icon-btn" id="purchasesViewToggle" title="Switch view" style="display:none;"></button>
 <button class="reset-link" id="resetPurchases">reset</button>
 </h2>
 <div class="add-row">
@@ -444,16 +466,21 @@ footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); mar
 </div>
 <button class="btn-primary" id="addPurchaseBtn">Add purchase</button>
 
-<div class="purchase-columns">
+<div class="purchase-columns" id="purchaseColumnsWrap">
 <div class="p-col">
-<div class="col-head"><span class="init c">C</span><strong id="totalC">₪0</strong></div>
+<div class="col-head"><span class="init c">C</span><strong class="purchase-total-c">₪0</strong></div>
 <ul class="entry-list" id="purchasesListC"></ul>
 </div>
 <div class="p-col">
-<div class="col-head"><span class="init t">T</span><strong id="totalT">₪0</strong></div>
+<div class="col-head"><span class="init t">T</span><strong class="purchase-total-t">₪0</strong></div>
 <ul class="entry-list" id="purchasesListT"></ul>
 </div>
 </div>
+<div class="purchase-totals-row" id="purchaseTotalsRow" style="display:none;">
+<span class="init c">C</span><strong class="purchase-total-c">₪0</strong>
+<span class="init t">T</span><strong class="purchase-total-t">₪0</strong>
+</div>
+<ul class="entry-list wide purchase-list" id="purchasesListAll" style="display:none;"></ul>
 
 <div class="semi-section-label">Semi-recurring expenses</div>
 <div class="closed-month-note" id="semiClosedNote" style="display:none;">
@@ -569,6 +596,15 @@ Move to October
 </div>
 </div>
 
+<div class="confirm-overlay" id="nameOverlay">
+<div class="confirm-box">
+<p id="nameOverlayText" style="word-break: break-word;"></p>
+<div class="confirm-actions">
+<button class="confirm-cancel" id="nameOverlayCloseBtn">Close</button>
+</div>
+</div>
+</div>
+
 <div class="confirm-overlay open" id="authOverlay">
 <div class="confirm-box">
 <p>Sign in to sync your household budget.</p>
@@ -655,6 +691,24 @@ async function handleManualGoogleReturn() {
   const PENCIL_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.6 1.6L12.4 4.4L4.6 12.2L1.4 12.6L1.8 9.4L9.6 1.6Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" stroke-linecap="round"/><path d="M8.2 3L11 5.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
   const CHECK_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7.3L5.6 10.4L11.5 3.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   const X_SVG = '<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2.3 2.3L10.7 10.7M10.7 2.3L2.3 10.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  const COLUMNS_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1" width="5" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/></svg>';
+  const LIST_SVG = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="2.2" rx="1.1" fill="currentColor"/><rect x="1" y="5.9" width="12" height="2.2" rx="1.1" fill="currentColor"/><rect x="1" y="9.8" width="12" height="2.2" rx="1.1" fill="currentColor"/></svg>';
+  // Purchases and semi-recurring dates only started being recorded from this month
+  // onward — months before it keep their original look (no dates, no cap, draggable).
+  const DATE_FEATURE_START = '2026-11';
+  function monthHasDates(mo) { return mo.key >= DATE_FEATURE_START; }
+  function todayISO() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const parts = String(iso).split('-');
+    if (parts.length !== 3) return '—';
+    const day = Number(parts[2]), month = Number(parts[1]);
+    if (!day || !month) return '—';
+    return day + '/' + month;
+  }
 
   function fmt(n) {
     const v = Math.round((Number(n) || 0) * 100) / 100;
@@ -679,6 +733,11 @@ async function handleManualGoogleReturn() {
   // Month keys the user has explicitly confirmed they want to edit even though the
   // month is closed. Session-only — not persisted, and only applies to semi-recurring entries.
   let unlockedMonths = new Set();
+  // Which capped purchase lists (by key: 'col-C' / 'col-T' / 'all') are currently expanded past 12.
+  let expandedPurchaseLists = new Set();
+  const PURCHASES_VIEW_KEY = 'household-budget-purchases-view';
+  let purchasesViewMode = 'list';
+  try { purchasesViewMode = localStorage.getItem(PURCHASES_VIEW_KEY) || 'list'; } catch (e) {}
   const LOCAL_KEY = 'household-budget-state-v2';
 
   function loadLocal() {
@@ -705,6 +764,23 @@ async function handleManualGoogleReturn() {
     function onCancel() { cleanup(); }
     okBtn.addEventListener('click', onOk);
     cancelBtn.addEventListener('click', onCancel);
+  }
+
+  // Shows the full text of a name that's been truncated with an ellipsis.
+  function showFullName(text) {
+    document.getElementById('nameOverlayText').textContent = text;
+    document.getElementById('nameOverlay').classList.add('open');
+  }
+  document.getElementById('nameOverlayCloseBtn').addEventListener('click', function () {
+    document.getElementById('nameOverlay').classList.remove('open');
+  });
+  // Attaches a click handler that opens the full-name popup when a truncated .entry-name is clicked.
+  function attachNamePopup(elId) {
+    document.getElementById(elId).addEventListener('click', function (e) {
+      const nameEl = e.target.closest('.entry-name');
+      if (!nameEl) return;
+      if (nameEl.scrollWidth > nameEl.clientWidth + 1) showFullName(nameEl.textContent);
+    });
   }
 
   function applyIncoming(newState) {
@@ -741,6 +817,38 @@ async function handleManualGoogleReturn() {
   }
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; });
+  }
+
+  // Newest first; purchases with no recorded date (pre-dates-feature) sort to the end.
+  function sortByDateDesc(list) {
+    return list.slice().sort(function (a, b) {
+      const da = a.date || '', db = b.date || '';
+      if (da === db) return 0;
+      return da < db ? 1 : -1;
+    });
+  }
+  const PURCHASE_PAGE_SIZE = 12;
+  // Renders a list capped at PURCHASE_PAGE_SIZE with a "show more/less" row appended when needed.
+  function renderCappedList(elId, items, expandKey, rowFn) {
+    const el = document.getElementById(elId);
+    if (items.length === 0) { el.innerHTML = '<li class="empty-note">No purchases.</li>'; return; }
+    const expanded = expandedPurchaseLists.has(expandKey);
+    const shown = expanded ? items : items.slice(0, PURCHASE_PAGE_SIZE);
+    let html = shown.map(rowFn).join('');
+    if (items.length > PURCHASE_PAGE_SIZE) {
+      html += '<li class="show-more-row"><button class="show-more-btn" data-expand-key="' + expandKey + '">' +
+        (expanded ? 'Show less' : 'Show ' + (items.length - PURCHASE_PAGE_SIZE) + ' more') + '</button></li>';
+    }
+    el.innerHTML = html;
+  }
+  function purchaseRowHtml(p, showBadge, isCurrent) {
+    return '<li data-purchase-id="' + p.id + '">' +
+      (showBadge ? '<span class="init ' + (p.person === 'C' ? 'c' : 't') + '">' + p.person + '</span>' : '') +
+      '<span class="entry-name">' + escapeHtml(p.item) + '</span>' +
+      '<span class="entry-date">' + fmtDate(p.date) + '</span>' +
+      '<span class="entry-price">' + fmt(p.price) + '</span>' +
+      (isCurrent ? '<button class="del-btn" data-del-purchase="' + p.id + '">✕</button>' : '') +
+      '</li>';
   }
 
   function updateCurrentMonth(patch) {
@@ -795,23 +903,52 @@ async function handleManualGoogleReturn() {
     [carryEl, incC, incT].forEach(function (el) { el.disabled = !isCurrent; });
     document.getElementById('incomeSum').textContent = fmt((m.incomeC || 0) + (m.incomeT || 0));
 
-    // purchases, split columns
-    function renderCol(person, elId) {
-      const list = (m.purchases || []).filter(function (p) { return p.person === person; });
-      const el = document.getElementById(elId);
-      if (list.length === 0) { el.innerHTML = '<li class="empty-note">No purchases.</li>'; return; }
-      el.innerHTML = list.map(function (p) {
-        return '<li data-purchase-id="' + p.id + '">' +
-          (isCurrent ? '<span class="drag-handle" title="Drag to reorder">' + GRIP_SVG + '</span>' : '') +
-          '<span class="entry-name">' + escapeHtml(p.item) + '</span>' +
-          '<span class="entry-price">' + fmt(p.price) + '</span>' +
-          (isCurrent ? '<button class="del-btn" data-del-purchase="' + p.id + '">✕</button>' : '') + '</li>';
-      }).join('');
+    // purchases — months from November 2026 on get the new dated/capped/sorted design;
+    // earlier months keep their original look exactly (two-column, draggable, no cap).
+    const newPurchasesDesign = monthHasDates(m);
+    const columnsWrap = document.getElementById('purchaseColumnsWrap');
+    const totalsRow = document.getElementById('purchaseTotalsRow');
+    const listAll = document.getElementById('purchasesListAll');
+    const viewToggle = document.getElementById('purchasesViewToggle');
+
+    if (!newPurchasesDesign) {
+      // Original behavior, unchanged.
+      viewToggle.style.display = 'none';
+      columnsWrap.style.display = 'grid';
+      totalsRow.style.display = 'none';
+      listAll.style.display = 'none';
+      function renderColOld(person, elId) {
+        const list = (m.purchases || []).filter(function (p) { return p.person === person; });
+        const el = document.getElementById(elId);
+        if (list.length === 0) { el.innerHTML = '<li class="empty-note">No purchases.</li>'; return; }
+        el.innerHTML = list.map(function (p) {
+          return '<li data-purchase-id="' + p.id + '">' +
+            (isCurrent ? '<span class="drag-handle" title="Drag to reorder">' + GRIP_SVG + '</span>' : '') +
+            '<span class="entry-name">' + escapeHtml(p.item) + '</span>' +
+            '<span class="entry-price">' + fmt(p.price) + '</span>' +
+            (isCurrent ? '<button class="del-btn" data-del-purchase="' + p.id + '">✕</button>' : '') + '</li>';
+        }).join('');
+      }
+      renderColOld('C', 'purchasesListC');
+      renderColOld('T', 'purchasesListT');
+    } else {
+      viewToggle.style.display = 'inline-flex';
+      const showColumns = purchasesViewMode === 'columns';
+      viewToggle.innerHTML = showColumns ? LIST_SVG : COLUMNS_SVG;
+      viewToggle.title = showColumns ? 'Switch to single list view' : 'Switch to two-column view';
+      columnsWrap.style.display = showColumns ? 'grid' : 'none';
+      totalsRow.style.display = showColumns ? 'none' : 'flex';
+      listAll.style.display = showColumns ? 'none' : 'block';
+
+      const listC = sortByDateDesc((m.purchases || []).filter(function (p) { return p.person === 'C'; }));
+      const listT = sortByDateDesc((m.purchases || []).filter(function (p) { return p.person === 'T'; }));
+      renderCappedList('purchasesListC', listC, 'col-C', function (p) { return purchaseRowHtml(p, false, isCurrent); });
+      renderCappedList('purchasesListT', listT, 'col-T', function (p) { return purchaseRowHtml(p, false, isCurrent); });
+      const listAllSorted = sortByDateDesc(m.purchases || []);
+      renderCappedList('purchasesListAll', listAllSorted, 'all', function (p) { return purchaseRowHtml(p, true, isCurrent); });
     }
-    renderCol('C', 'purchasesListC');
-    renderCol('T', 'purchasesListT');
-    document.getElementById('totalC').textContent = fmt(purchasesTotal(m, 'C'));
-    document.getElementById('totalT').textContent = fmt(purchasesTotal(m, 'T'));
+    document.querySelectorAll('.purchase-total-c').forEach(function (el) { el.textContent = fmt(purchasesTotal(m, 'C')); });
+    document.querySelectorAll('.purchase-total-t').forEach(function (el) { el.textContent = fmt(purchasesTotal(m, 'T')); });
 
     // semi-recurring: closed-month note
     const closedNote = document.getElementById('semiClosedNote');
@@ -888,10 +1025,10 @@ async function handleManualGoogleReturn() {
 
   // ---- events ----
   document.getElementById('prevMonthBtn').addEventListener('click', function () {
-    if (viewingIndex > 0) { viewingIndex--; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
+    if (viewingIndex > 0) { viewingIndex--; wasAtLatest = (viewingIndex === state.months.length - 1); expandedPurchaseLists.clear(); render(); }
   });
   document.getElementById('nextMonthNavBtn').addEventListener('click', function () {
-    if (viewingIndex < state.months.length - 1) { viewingIndex++; wasAtLatest = (viewingIndex === state.months.length - 1); render(); }
+    if (viewingIndex < state.months.length - 1) { viewingIndex++; wasAtLatest = (viewingIndex === state.months.length - 1); expandedPurchaseLists.clear(); render(); }
   });
 
   document.getElementById('carryOver').addEventListener('change', function (e) {
@@ -928,6 +1065,7 @@ async function handleManualGoogleReturn() {
     const entry = { id: genId(), item: item, price: price, person: selectedPerson };
     const months = state.months.slice();
     const idx = months.length - 1;
+    if (monthHasDates(months[idx])) entry.date = todayISO();
     months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).concat([entry]) });
     saveState(Object.assign({}, state, { months: months }));
     itemEl.value = ''; priceEl.value = ''; itemEl.focus();
@@ -938,11 +1076,27 @@ async function handleManualGoogleReturn() {
     months[idx] = Object.assign({}, months[idx], { purchases: (months[idx].purchases || []).filter(function (p) { return p.id !== id; }) });
     saveState(Object.assign({}, state, { months: months }));
   }
-  document.getElementById('purchasesListC').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
-  });
-  document.getElementById('purchasesListT').addEventListener('click', function (e) {
-    const b = e.target.closest('[data-del-purchase]'); if (b) delPurchase(b.getAttribute('data-del-purchase'));
+  function wirePurchaseListEvents(elId) {
+    const el = document.getElementById(elId);
+    el.addEventListener('click', function (e) {
+      const delBtn = e.target.closest('[data-del-purchase]');
+      if (delBtn) { delPurchase(delBtn.getAttribute('data-del-purchase')); return; }
+      const expandBtn = e.target.closest('[data-expand-key]');
+      if (expandBtn) {
+        const key = expandBtn.getAttribute('data-expand-key');
+        if (expandedPurchaseLists.has(key)) expandedPurchaseLists.delete(key); else expandedPurchaseLists.add(key);
+        render();
+      }
+    });
+    attachNamePopup(elId);
+  }
+  wirePurchaseListEvents('purchasesListC');
+  wirePurchaseListEvents('purchasesListT');
+  wirePurchaseListEvents('purchasesListAll');
+  document.getElementById('purchasesViewToggle').addEventListener('click', function () {
+    purchasesViewMode = purchasesViewMode === 'list' ? 'columns' : 'list';
+    try { localStorage.setItem(PURCHASES_VIEW_KEY, purchasesViewMode); } catch (e) {}
+    render();
   });
   document.getElementById('resetPurchases').addEventListener('click', function () {
     askConfirm('Clear all purchases this month?', function () { updateCurrentMonth({ purchases: [] }); });
@@ -982,6 +1136,7 @@ async function handleManualGoogleReturn() {
     const idx = viewingIndex;
     const mo = state.months[idx];
     const entry = { id: genId(), semiId: semiId, amount: amount };
+    if (monthHasDates(mo)) entry.date = todayISO();
     updateMonthAt(idx, { semiEntries: (mo.semiEntries || []).concat([entry]) });
   }
   function delSemiEntry(monthIdx, entryId) {
@@ -1016,6 +1171,7 @@ async function handleManualGoogleReturn() {
     } else {
       listEl.innerHTML = entries.map(function (e, i) {
         return '<li><span class="tag">' + (i + 1) + '</span>' +
+          '<span class="entry-date">' + fmtDate(e.date) + '</span>' +
           '<span class="entry-name">' + fmt(e.amount) + '</span>' +
           (monthUnlocked ? '<button class="del-btn" data-del-semi-entry="' + e.id + '">✕</button>' : '') + '</li>';
       }).join('');
@@ -1062,6 +1218,7 @@ async function handleManualGoogleReturn() {
     const viewBtn = e.target.closest('[data-view-semi]');
     if (viewBtn) { openSemiDetail(viewBtn.getAttribute('data-view-semi')); return; }
   });
+  attachNamePopup('semiList');
   // Enter key in a semi amount input also logs the entry.
   document.getElementById('semiList').addEventListener('keydown', function (e) {
     if (e.key !== 'Enter') return;
