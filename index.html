@@ -66,6 +66,11 @@
 }
 html { scroll-padding-top: env(safe-area-inset-top, 0px); }
 * { box-sizing: inherit; }
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
 body {
   margin: 0;
   background: var(--bg);
@@ -76,8 +81,10 @@ body {
 }
 .page {
   max-width: 480px;
+  width: 100%;
   margin: 0 auto;
   padding: 20px 18px 56px;
+  overflow-x: hidden;
 }
 header.top {
   display: flex;
@@ -193,12 +200,13 @@ header.top .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
 
 /* Carry-over */
 .carry-row { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 14px; }
-.carry-field { flex: 1; }
+.carry-field { flex: 1; min-width: 0; }
 .carry-field label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; font-weight: 700; }
 .carry-hint { font-size: 11.5px; color: var(--ink-soft); margin-top: 6px; font-style: italic; }
 
 /* Income */
-.income-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.income-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.income-field { min-width: 0; }
 .income-field label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; font-weight: 700; }
 .init {
   display: inline-flex; align-items: center; justify-content: center;
@@ -210,6 +218,7 @@ header.top .sub { font-size: 12.5px; color: var(--ink-soft); margin-top: 1px; }
 .init.t { background: var(--person-t); }
 input[type="number"], input[type="text"] {
   width: 100%;
+  min-width: 0;
   font-family: 'Nunito', sans-serif;
   font-size: 15px;
   padding: 10px 12px;
@@ -715,6 +724,13 @@ async function handleManualGoogleReturn() {
     return CUR + v.toLocaleString('en-US', { maximumFractionDigits: 2 });
   }
   function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function parseValidAmount(raw) {
+    const s = String(raw).trim();
+    if (s === '') return null;
+    const n = Number(s);
+    if (isNaN(n) || n < 0) return null;
+    return n;
+  }
   function monthKey(idx, yr) { return yr + '-' + String(idx + 1).padStart(2, '0'); }
   function freshMonth(idx, yr) {
     return { key: monthKey(idx, yr), monthIndex: idx, year: yr, carryOver: 0, incomeC: 0, incomeT: 0, purchases: [], semiEntries: [] };
@@ -1060,8 +1076,8 @@ async function handleManualGoogleReturn() {
     const itemEl = document.getElementById('purchaseItem');
     const priceEl = document.getElementById('purchasePrice');
     const item = itemEl.value.trim();
-    const price = Number(priceEl.value);
-    if (!item || !(price > 0)) return;
+    const price = parseValidAmount(priceEl.value);
+    if (!item || price === null) return;
     const entry = { id: genId(), item: item, price: price, person: selectedPerson };
     const months = state.months.slice();
     const idx = months.length - 1;
@@ -1209,8 +1225,8 @@ async function handleManualGoogleReturn() {
       if (addBtn.disabled) return;
       const id = addBtn.getAttribute('data-semi-add');
       const input = document.querySelector('[data-semi-input="' + id + '"]');
-      const amount = Number(input.value);
-      if (!(amount > 0)) return;
+      const amount = parseValidAmount(input.value);
+      if (amount === null) return;
       addSemiEntry(id, amount);
       input.value = '';
       return;
@@ -1226,8 +1242,8 @@ async function handleManualGoogleReturn() {
     if (!input || input.disabled) return;
     e.preventDefault();
     const id = input.getAttribute('data-semi-input');
-    const amount = Number(input.value);
-    if (!(amount > 0)) return;
+    const amount = parseValidAmount(input.value);
+    if (amount === null) return;
     addSemiEntry(id, amount);
     input.value = '';
   });
@@ -1236,8 +1252,8 @@ async function handleManualGoogleReturn() {
     const nameEl = document.getElementById('recurringName');
     const amtEl = document.getElementById('recurringAmount');
     const name = nameEl.value.trim();
-    const amount = Number(amtEl.value);
-    if (!name || !(amount > 0)) return;
+    const amount = parseValidAmount(amtEl.value);
+    if (!name || amount === null) return;
     const entry = { id: genId(), name: name, amount: amount };
     saveState(Object.assign({}, state, { recurring: (state.recurring || []).concat([entry]) }));
     nameEl.value = ''; amtEl.value = ''; nameEl.focus();
@@ -1256,8 +1272,8 @@ async function handleManualGoogleReturn() {
     const nameInput = li.querySelector('.edit-name-input');
     const amtInput = li.querySelector('.edit-amount-input');
     const name = nameInput.value.trim();
-    const amount = Number(amtInput.value);
-    if (!name || !(amount > 0)) { render(); return; }
+    const amount = parseValidAmount(amtInput.value);
+    if (!name || amount === null) { render(); return; }
     saveState(Object.assign({}, state, {
       recurring: (state.recurring || []).map(function (r) {
         return r.id === id ? Object.assign({}, r, { name: name, amount: amount }) : r;
