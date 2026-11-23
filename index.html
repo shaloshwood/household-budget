@@ -404,6 +404,9 @@ footer.status { text-align: center; font-size: 11px; color: var(--ink-soft); mar
 
 #authOverlay { z-index: 200; }
 #authOverlay .confirm-box { text-align: center; }
+#loadingOverlay { z-index: 150; }
+#loadingOverlay .confirm-box { text-align: center; }
+#loadingOverlay p { margin: 0; }
 .google-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   width: 100%; padding: 12px 0; border-radius: 14px; border: 1px solid var(--line);
@@ -614,6 +617,14 @@ Move to October
 </div>
 </div>
 
+<!-- Covers the screen until the real budget has been loaded from the server, so nobody
+     can see or edit the empty placeholder month that exists before the data arrives. -->
+<div class="confirm-overlay open" id="loadingOverlay">
+<div class="confirm-box">
+<p id="loadingText">Loading your budget…</p>
+</div>
+</div>
+
 <div class="confirm-overlay open" id="authOverlay">
 <div class="confirm-box">
 <p>Sign in to sync your household budget.</p>
@@ -756,6 +767,38 @@ async function handleManualGoogleReturn() {
   try { purchasesViewMode = localStorage.getItem(PURCHASES_VIEW_KEY) || 'list'; } catch (e) {}
   const LOCAL_KEY = 'household-budget-state-v2';
 
+  // ---- data-loss protection ----
+  // serverLoaded only becomes true once the real record has arrived from the server (not from
+  // a local cache). Until then nothing may be saved, so the empty placeholder month that exists
+  // before the data arrives can never be written over the real budget.
+  let serverLoaded = false;
+  let restorePromptOpen = false;
+  // Each phone keeps its own copy of the fullest budget it has received from the server.
+  const LAST_GOOD_KEY = 'household-budget-last-good';
+  function readLastGood() {
+    try {
+      const raw = localStorage.getItem(LAST_GOOD_KEY);
+      if (raw) {
+        const o = JSON.parse(raw);
+        if (o && o.state && Array.isArray(o.state.months)) return o;
+      }
+    } catch (e) {}
+    return null;
+  }
+  function rememberLastGood(s, force) {
+    const prev = readLastGood();
+    // Months are never removed in normal use, so a copy with fewer months is never "better".
+    if (!force && prev && prev.state.months.length > s.months.length) return;
+    try { localStorage.setItem(LAST_GOOD_KEY, JSON.stringify({ savedAt: new Date().toISOString(), state: s })); } catch (e) {}
+  }
+  // One backup record per day on the server (budget/backup-YYYY-MM-DD), holding that day's last save.
+  function writeDailyBackup(s) {
+    setDoc(doc(firestore, 'budget', 'backup-' + todayISO()), { savedAt: new Date().toISOString(), state: s })
+      .catch(function () {});
+  }
+  function hideLoading() { document.getElementById('loadingOverlay').classList.remove('open'); }
+  function setLoadingText(t) { const el = document.getElementById('loadingText'); if (el) el.textContent = t; }
+
   function loadLocal() {
     try { const raw = localStorage.getItem(LOCAL_KEY); if (raw) state = JSON.parse(raw); } catch (e) {}
   }
@@ -765,7 +808,7 @@ async function handleManualGoogleReturn() {
   function setStatus(t) { const el = document.getElementById('statusNote'); if (el) el.textContent = t; }
 
   // In-page confirm dialog (keeps the look consistent instead of the browser's native confirm()).
-  function askConfirm(message, onYes) {
+  function askConfirm(message, onYes, onNo) {
     const overlay = document.getElementById('confirmOverlay');
     document.getElementById('confirmMessage').textContent = message;
     overlay.classList.add('open');
@@ -777,7 +820,7 @@ async function handleManualGoogleReturn() {
       cancelBtn.removeEventListener('click', onCancel);
     }
     function onOk() { cleanup(); onYes(); }
-    function onCancel() { cleanup(); }
+    function onCancel() { cleanup(); if (onNo) onNo(); }
     okBtn.addEventListener('click', onOk);
     cancelBtn.addEventListener('click', onCancel);
   }
@@ -808,9 +851,21 @@ async function handleManualGoogleReturn() {
   }
 
   function saveState(newState) {
+    if (usingDb && !serverLoaded) {
+      setStatus('Not connected yet — that change was not saved.');
+      render();
+      return;
+    }
+    if (usingDb && (newState.months || []).length < (state.months || []).length) {
+      setStatus('Blocked a save that would have removed months.');
+      render();
+      return;
+    }
     applyIncoming(newState);
     if (usingDb && docRef) {
-      setDoc(docRef, newState).catch(function () { setStatus('Could not sync just now — will retry on next change.'); });
+      setDoc(docRef, newState)
+        .then(function () { rememberLastGood(newState); writeDailyBackup(newState); })
+        .catch(function () { setStatus('Could not sync just now — will retry on next change.'); });
     } else { saveLocal(); }
     render();
   }
@@ -1412,20 +1467,81 @@ async function handleManualGoogleReturn() {
   });
 
   // ---- init / sync ----
+  // Shown when the record online has fewer months than a copy this phone holds.
+  // incoming = the server's (smaller) record, or null when the server has no record at all.
+  function offerRestore(copy, incoming) {
+    if (restorePromptOpen) return;
+    restorePromptOpen = true;
+    hideLoading();
+    const serverCount = incoming ? incoming.months.length : 0;
+    askConfirm(
+      'Warning: the budget saved online has ' + serverCount + ' month(s), but this phone has a copy with ' +
+      copy.months.length + ' months. Data may have been lost. Put this phone\'s copy back online?',
+      function () {
+        restorePromptOpen = false;
+        serverLoaded = true;
+        applyIncoming(copy);
+        setDoc(docRef, copy)
+          .then(function () { writeDailyBackup(copy); })
+          .catch(function () { setStatus('Could not restore just now — close and reopen the app.'); });
+        setStatus('Restored this phone\'s copy.');
+        render();
+      },
+      function () {
+        restorePromptOpen = false;
+        if (incoming) {
+          rememberLastGood(incoming, true);
+          applyIncoming(incoming);
+          serverLoaded = true;
+          setStatus('Synced with your household.');
+        } else {
+          try { localStorage.removeItem(LAST_GOOD_KEY); } catch (e) {}
+          setDoc(docRef, defaultState()).catch(function () {});
+        }
+        render();
+      }
+    );
+  }
+
   function startFirestoreSync() {
     if (usingDb) return;
     docRef = doc(firestore, 'budget', 'state');
     usingDb = true;
-    onSnapshot(docRef, function (snap) {
-      if (snap.exists()) {
-        applyIncoming(snap.data());
-        setStatus('Synced with your household.');
-        render();
-      } else {
-        setDoc(docRef, defaultState()).catch(function () {});
+    onSnapshot(docRef, { includeMetadataChanges: true }, function (snap) {
+      const fromServer = !snap.metadata.fromCache;
+      if (!snap.exists()) {
+        // "Missing" from the local cache only means "no connection yet". This is exactly the
+        // case that used to wipe the budget — never act on it.
+        if (!fromServer) { setLoadingText('Waiting for an internet connection…'); return; }
+        // The server itself confirms there is no record.
+        if (!serverLoaded) {
+          const lastGood = readLastGood();
+          if (lastGood) offerRestore(lastGood.state, null);
+          else setDoc(docRef, defaultState()).catch(function () {}); // genuine first-time setup
+        }
+        return;
       }
+      const incoming = snap.data();
+      if (!incoming || !Array.isArray(incoming.months) || incoming.months.length === 0) return;
+      if (!fromServer && !serverLoaded) return; // wait for the server's own answer
+      if (fromServer && !snap.metadata.hasPendingWrites) {
+        // Compare with the fullest copy this phone has: what's on screen, or the copy saved on the phone.
+        const lastGood = readLastGood();
+        let best = serverLoaded ? state : null;
+        if (lastGood && (!best || lastGood.state.months.length > best.months.length)) best = lastGood.state;
+        if (best && incoming.months.length < best.months.length) {
+          offerRestore(best, incoming);
+          return;
+        }
+        rememberLastGood(incoming);
+      }
+      applyIncoming(incoming);
+      if (!serverLoaded && fromServer) { serverLoaded = true; hideLoading(); }
+      setStatus('Synced with your household.');
+      render();
     }, function () {
       usingDb = false; loadLocal();
+      hideLoading();
       setStatus('Working offline on this device — changes will not sync.');
       render();
     });
